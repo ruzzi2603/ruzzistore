@@ -18,24 +18,28 @@ export class GamesService {
     page?: number;
   }) {
     if (filters.source === 'rawg') {
-      try {
-        await this.syncRawgGames(filters.page ?? 1);
-      } catch (err: any) {
-        // Fallback: return RAWG data directly if DB sync fails
-        const data = await this.rawgService.getGames(filters.page ?? 1);
-        const results = Array.isArray(data?.results) ? data.results : [];
-        return results.map((item: any) => {
-          const slug = item?.slug || String(item?.id || 'rawg');
-          return {
-            id: item?.id || slug,
-            title: item?.name || 'Sem titulo',
-            imageUrl: item?.background_image || null,
-            platform: 'rawg',
-            url: `https://rawg.io/games/${slug}`,
-            isFree: false,
-          };
-        });
-      }
+      const data = await this.rawgService.getGames(filters.page ?? 1);
+      const results = Array.isArray(data?.results) ? data.results : [];
+
+      // Sync in background so the API keeps working even if the DB is flaky.
+      this.syncRawgGames(filters.page ?? 1).catch((err: any) => {
+        // Keep logs short but useful for Render diagnostics
+        const message = err?.message || err?.toString?.() || 'Unknown error';
+        // eslint-disable-next-line no-console
+        console.error('RAWG sync failed:', message);
+      });
+
+      return results.map((item: any) => {
+        const slug = item?.slug || String(item?.id || 'rawg');
+        return {
+          id: item?.id || slug,
+          title: item?.name || 'Sem titulo',
+          imageUrl: item?.background_image || null,
+          platform: 'rawg',
+          url: `https://rawg.io/games/${slug}`,
+          isFree: false,
+        };
+      });
     }
 
     return this.prisma.game.findMany({

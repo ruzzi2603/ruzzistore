@@ -10,17 +10,26 @@ export class RawgService {
   constructor(private readonly http: HttpService) {}
 
   async getGames(page = 1, pageSize = 100, ordering?: string) {
-    const response = await firstValueFrom(
-      this.http.get(`${this.baseUrl}/games`, {
-        params: {
-          key: this.apiKey,
-          page,
-          page_size: pageSize,
-          ...(ordering ? { ordering } : {}),
-        },
-      }),
-    );
+    try {
+      const response = await firstValueFrom(
+        this.http.get(`${this.baseUrl}/games`, {
+          params: {
+            key: this.apiKey,
+            page,
+            page_size: pageSize,
+            ...(ordering ? { ordering } : {}),
+          },
+        }),
+      );
 
-    return response.data;
+      return response.data;
+    } catch (err: any) {
+      const status = err?.response?.status;
+      const data = err?.response?.data;
+      const message = err?.message || err?.toString?.() || 'Unknown error';
+      // eslint-disable-next-line no-console
+      console.error('RAWG API error:', status ?? 'no-status', data ?? message);
+      throw err;
+    }
   }
 }
