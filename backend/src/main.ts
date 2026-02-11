@@ -8,6 +8,7 @@ import { applyRateLimit } from './security/rate-limit';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.set('trust proxy', 1);
   app.use(express.json({ limit: '5mb' }));
   app.use(express.urlencoded({ limit: '5mb', extended: true }));
 
