@@ -18,8 +18,14 @@ export class GamesService {
     page?: number;
   }) {
     if (filters.source === 'rawg') {
-      const data = await this.rawgService.getGames(filters.page ?? 1);
-      const results = Array.isArray(data?.results) ? data.results : [];
+      let results: any[] = [];
+      try {
+        const data = await this.rawgService.getGames(filters.page ?? 1);
+        results = Array.isArray(data?.results) ? data.results : [];
+      } catch {
+        // If RAWG is unavailable, return empty list instead of 500
+        return [];
+      }
 
       // Sync in background so the API keeps working even if the DB is flaky.
       this.syncRawgGames(filters.page ?? 1).catch((err: any) => {
@@ -117,6 +123,7 @@ export class GamesService {
   private async syncRawgGames(page: number) {
     const data = await this.rawgService.getGames(page);
     const results = Array.isArray(data?.results) ? data.results : [];
+    if (results.length === 0) return;
 
     const upserts = results.map((item: any) => {
       const slug = item?.slug || String(item?.id || 'rawg');
@@ -144,6 +151,10 @@ export class GamesService {
       });
     });
 
-    await Promise.all(upserts);
+    const chunkSize = 5;
+    for (let i = 0; i < upserts.length; i += chunkSize) {
+      // Avoid exhausting the Prisma connection pool on small instances
+      await Promise.all(upserts.slice(i, i + chunkSize));
+    }
   }
 }
