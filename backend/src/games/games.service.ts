@@ -18,7 +18,24 @@ export class GamesService {
     page?: number;
   }) {
     if (filters.source === 'rawg') {
-      await this.syncRawgGames(filters.page ?? 1);
+      try {
+        await this.syncRawgGames(filters.page ?? 1);
+      } catch (err: any) {
+        // Fallback: return RAWG data directly if DB sync fails
+        const data = await this.rawgService.getGames(filters.page ?? 1);
+        const results = Array.isArray(data?.results) ? data.results : [];
+        return results.map((item: any) => {
+          const slug = item?.slug || String(item?.id || 'rawg');
+          return {
+            id: item?.id || slug,
+            title: item?.name || 'Sem titulo',
+            imageUrl: item?.background_image || null,
+            platform: 'rawg',
+            url: `https://rawg.io/games/${slug}`,
+            isFree: false,
+          };
+        });
+      }
     }
 
     return this.prisma.game.findMany({
