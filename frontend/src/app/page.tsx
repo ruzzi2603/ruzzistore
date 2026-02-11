@@ -36,7 +36,7 @@ export default function Home() {
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/games?source=rawg&page=${pageToLoad}`,
-        { cache: "force-cache" },
+        { cache: "no-store" },
       );
       if (!res.ok) {
         if (isInitial) setGames([]);
@@ -72,7 +72,7 @@ export default function Home() {
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/games/rawg-latest?count=40`,
-        { cache: "force-cache" },
+        { cache: "no-store" },
       );
       if (!res.ok) {
         setLatestGames([]);
