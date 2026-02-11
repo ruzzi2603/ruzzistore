@@ -1,0 +1,6 @@
+{
+  "siteName": "RuzziStore",
+  "siteUrl": "http://localhost:3001",
+  "description": "Game promotions aggregator",
+  "keywords": ["games", "promotions", "free games", "discounts"]
+}

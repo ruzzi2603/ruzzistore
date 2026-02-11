@@ -1,0 +1,5 @@
+{
+  "development": true,
+  "debugMode": true,
+  "apiEndpoint": "http://localhost:3000"
+}

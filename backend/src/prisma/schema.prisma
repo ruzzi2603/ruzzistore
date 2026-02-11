@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String   @default("")
+  password  String
+  avatar    String?  @db.LongText
+  lastLoginAt DateTime?
+  createdAt DateTime @default(now())
+
+  favorites Favorite[]
+
+  @@map("user")
+}
+
+model Game {
+  id          Int            @id @default(autoincrement())
+  title       String
+  description String?
+  imageUrl    String?
+  platform    String
+  isFree      Boolean        @default(true)
+  url         String
+  createdAt   DateTime       @default(now())
+
+  categories  GameCategory[]
+  favorites   Favorite[]
+
+  @@unique([platform, url])
+  @@map("game")
+}
+
+model Category {
+  id    Int    @id @default(autoincrement())
+  name  String @unique(map: "Category_name_key")
+
+  games GameCategory[]
+
+  @@map("category")
+}
+
+model GameCategory {
+  gameId     Int
+  categoryId Int
+
+  game     Game     @relation(fields: [gameId], references: [id], map: "GameCategory_gameId_fkey")
+  category Category @relation(fields: [categoryId], references: [id], map: "GameCategory_categoryId_fkey")
+
+  @@id([gameId, categoryId])
+  @@index([categoryId], map: "GameCategory_categoryId_fkey")
+  @@map("gamecategory")
+}
+
+model Favorite {
+  userId Int
+  gameId Int
+
+  user User @relation(fields: [userId], references: [id])
+  game Game @relation(fields: [gameId], references: [id])
+
+  @@id([userId, gameId])
+  @@map("favorite")
+}
