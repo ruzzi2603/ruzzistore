@@ -43,7 +43,11 @@ export default function Home() {
         return;
       }
       const data = await res.json();
-      const safeData = Array.isArray(data) ? data : [];
+      const safeData = Array.isArray(data)
+        ? data
+        : Array.isArray((data as any)?.results)
+        ? (data as any).results
+        : [];
       setAllGames(safeData);
       const visibleCount = Math.min(safeData.length, pageToLoad * PAGE_SIZE);
       setGames(safeData.slice(0, visibleCount));
