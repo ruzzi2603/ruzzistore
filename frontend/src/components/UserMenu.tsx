@@ -15,7 +15,6 @@ export default function UserMenu() {
   const [authOpen, setAuthOpen] = useState(false);
   const [authTab, setAuthTab] = useState<'login' | 'register'>('login');
   const [avatarInput, setAvatarInput] = useState('');
-  const [hasLoggedInBefore, setHasLoggedInBefore] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -27,19 +26,6 @@ export default function UserMenu() {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const flag = localStorage.getItem('@RuzziStore:hasLoggedIn');
-    setHasLoggedInBefore(flag === 'true');
-  }, []);
-
-  useEffect(() => {
-    if (user && typeof window !== 'undefined') {
-      localStorage.setItem('@RuzziStore:hasLoggedIn', 'true');
-      setHasLoggedInBefore(true);
-    }
-  }, [user]);
 
   const openAuth = (tab: 'login' | 'register') => {
     setAuthTab(tab);
@@ -71,10 +57,6 @@ export default function UserMenu() {
   };
 
   if (!user) {
-    if (hasLoggedInBefore) {
-      return null;
-    }
-
     return (
       <div className="user-menu-auth">
         <button onClick={() => openAuth('login')} className="user-menu-login">
