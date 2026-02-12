@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Heart, ShoppingCart, Star } from 'lucide-react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-hot-toast';
 
 interface GameCardProps {
   game: {
@@ -32,7 +33,7 @@ const GameCard = ({ game, isFavorited = false, onFavoriteToggle, user }: GameCar
     e.stopPropagation();
 
     if (!user) {
-      router.push('/login');
+      toast.error('Voce precisa logar para favoritar.');
       return;
     }
 

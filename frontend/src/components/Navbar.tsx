@@ -5,11 +5,14 @@ import { usePathname } from 'next/navigation';
 import { LayoutDashboard, Library } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import UserMenu from './UserMenu';
+import { useAuth } from '@/components/context/AuthContext';
+import { toast } from 'react-hot-toast';
 
 export default function Navbar() {
   const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const { user } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,6 +57,12 @@ export default function Navbar() {
           <Link
             href="/dashboard/library"
             className={`navbar-link ${pathname.startsWith('/dashboard/library') ? 'navbar-link-active' : 'navbar-link-inactive'}`}
+            onClick={(e) => {
+              if (!user) {
+                e.preventDefault();
+                toast.error('Voce precisa logar para acessar a biblioteca.');
+              }
+            }}
           >
             <Library size={18} />
             Biblioteca
