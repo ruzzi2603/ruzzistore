@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import api from '@/lib/api';
+import { toast } from 'react-hot-toast';
 
 interface Game {
   id: string | number;
@@ -45,7 +46,13 @@ export const useFavoritesStore = create<FavoritesState>((set, get) => ({
       await api.post(`/favorites/${game.id}`, {});
     } catch (error) {
       set({ favorites: previousFavorites });
-      console.error("Erro ao salvar favorito no servidor");
+      const message = error instanceof Error ? error.message : 'Erro ao salvar favorito';
+      if (message.toLowerCase().includes('unauthorized') || message.includes('401')) {
+        toast.error('Sessao expirada. Faça login novamente.');
+      } else {
+        toast.error('Nao foi possivel salvar o favorito.');
+      }
+      console.error('Erro ao salvar favorito no servidor', error);
     }
   },
 
