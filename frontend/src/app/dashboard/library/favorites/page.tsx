@@ -7,9 +7,11 @@ import AnimatedSection from '@/components/AnimatedSection';
 import { HeartOff } from 'lucide-react';
 import Link from 'next/link';
 import { useAuth } from '@/components/context/AuthContext';
+import { useRouter } from 'next/navigation';
 
 export default function FavoritesPage() {
   const { user } = useAuth();
+  const router = useRouter();
   const { favorites, fetchFavorites, toggleFavorite, isFavorite } = useFavoritesStore();
 
   useEffect(() => {
@@ -17,6 +19,16 @@ export default function FavoritesPage() {
       fetchFavorites();
     }
   }, [user, fetchFavorites]);
+
+  useEffect(() => {
+    if (!user) {
+      router.push('/login');
+    }
+  }, [user, router]);
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-10 min-h-screen">

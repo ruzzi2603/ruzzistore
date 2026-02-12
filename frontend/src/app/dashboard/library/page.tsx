@@ -3,8 +3,24 @@
 import Link from 'next/link';
 import AnimatedSection from '@/components/AnimatedSection';
 import { Heart } from 'lucide-react';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/components/context/AuthContext';
 
 export default function LibraryPage() {
+  const { user, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/login');
+    }
+  }, [loading, user, router]);
+
+  if (!user) {
+    return null;
+  }
+
   return (
     <div className="max-w-7xl mx-auto px-6 py-10">
       <AnimatedSection>
