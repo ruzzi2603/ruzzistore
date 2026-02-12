@@ -38,7 +38,7 @@ export default function GamesGrid({ games, user }: GamesGridProps) {
             key={game.id}
             game={game}
             user={user}
-            isFavorited={isFavorite(game.id)}
+            isFavorited={isFavorite(game.id, game.url)}
             onFavoriteToggle={async () => toggleFavorite(game)}
           />
         ))}

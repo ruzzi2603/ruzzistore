@@ -60,7 +60,7 @@ export default function FavoritesPage() {
               <GameCard
                 game={game}
                 user={user}
-                isFavorited={isFavorite(game.id)}
+                isFavorited={isFavorite(game.id, game.url)}
                 onFavoriteToggle={async () => toggleFavorite(game)}
               />
             </AnimatedSection>

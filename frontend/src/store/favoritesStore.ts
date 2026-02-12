@@ -10,13 +10,14 @@ interface Game {
   promotionPrice?: number;
   platform?: string;
   imageUrl?: string;
+  url?: string;
 }
 
 interface FavoritesState {
   favorites: Game[];
   fetchFavorites: () => Promise<void>;
   toggleFavorite: (game: Game) => Promise<void>;
-  isFavorite: (gameId: string | number) => boolean;
+  isFavorite: (gameId: string | number, url?: string) => boolean;
   clearFavorites: () => void; // <--- ADICIONE ESTA LINHA NA INTERFACE
 }
 
@@ -43,7 +44,7 @@ export const useFavoritesStore = create<FavoritesState>((set, get) => ({
     }
 
     try {
-      await api.post(`/favorites/${game.id}`, {});
+      await api.post(`/favorites/${game.id}`, { game });
     } catch (error) {
       set({ favorites: previousFavorites });
       const message = error instanceof Error ? error.message : 'Erro ao salvar favorito';
@@ -56,7 +57,12 @@ export const useFavoritesStore = create<FavoritesState>((set, get) => ({
     }
   },
 
-  isFavorite: (gameId) => get().favorites.some((f) => String(f.id) === String(gameId)),
+  isFavorite: (gameId, url) => {
+    if (url) {
+      return get().favorites.some((f) => f.url && f.url === url);
+    }
+    return get().favorites.some((f) => String(f.id) === String(gameId));
+  },
 
   // <--- ADICIONE ESTA IMPLEMENTAÇÃO
   clearFavorites: () => {

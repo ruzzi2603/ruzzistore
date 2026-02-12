@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Param, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Param, UseGuards, Req, Body } from '@nestjs/common';
 import { FavoritesService } from './favorites.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
@@ -21,9 +21,9 @@ export class FavoritesController {
   }
 
   @Post(':gameId')
-  async toggle(@Req() req: any, @Param('gameId') gameId: string) {
+  async toggle(@Req() req: any, @Param('gameId') gameId: string, @Body() body: any) {
     const userId = Number(req.user.userId);
     const gId = Number(gameId);
-    return this.favoritesService.toggleFavorite(userId, gId);
+    return this.favoritesService.toggleFavorite(userId, gId, body?.game);
   }
 }
