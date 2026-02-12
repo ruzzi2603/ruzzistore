@@ -27,14 +27,7 @@ export class GamesService {
         return [];
       }
 
-      // Sync in background so the API keeps working even if the DB is flaky.
-      this.syncRawgGames(filters.page ?? 1).catch((err: any) => {
-        // Keep logs short but useful for Render diagnostics
-        const message = err?.message || err?.toString?.() || 'Unknown error';
-        // eslint-disable-next-line no-console
-        console.error('RAWG sync failed:', message);
-      });
-
+      // Do NOT sync to DB on request to avoid exhausting the connection pool.
       return results.map((item: any) => {
         const slug = item?.slug || String(item?.id || 'rawg');
         return {
