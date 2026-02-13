@@ -25,10 +25,13 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
 
   useEffect(() => {
     if (!open) return;
-    const original = document.body.style.overflow;
+    const originalBodyOverflow = document.body.style.overflow;
+    const originalHtmlOverflow = document.documentElement.style.overflow;
     document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
     return () => {
-      document.body.style.overflow = original;
+      document.body.style.overflow = originalBodyOverflow;
+      document.documentElement.style.overflow = originalHtmlOverflow;
     };
   }, [open]);
 
@@ -135,8 +138,8 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
   id="sec"
   style={{
     background: tab === 'login'
-      ? 'linear-gradient(to right,#b4f5ff, #00ddff,#00ddff,#022227,#022227,#022227,#022227)'
-      : 'linear-gradient(to left,#b4f5ff, #00ddff,#00ddff,#022227,#022227,#022227,#022227)'
+      ? 'linear-gradient(to right, #03387d 50%, #022227 50%)'
+      : 'linear-gradient(to left, #03387d 50%, #022227 50%)'
   }}
 >
   <button id='ftbtn'
@@ -158,9 +161,10 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
           <form onSubmit={handleLogin} className="auth-modal-form">
             <div className='txtLg'>Bem-vindo de volta!</div>
             <div className='ett' id='et3'>
+               <label typeof="input" className="text">Email:</label>
             <input
               type="email"
-              placeholder="Email"
+         
               required
               className="auth-modal-input"
               value={email}
@@ -168,9 +172,10 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
             />
             </div>
              <div className='ett' id='et42'>
+               <label typeof="input" className="text">Senha:</label>
             <input
               type="password"
-              placeholder="Senha"
+             
               required
               className="auth-modal-input"
               value={password}
@@ -187,10 +192,11 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
           <div id='all'>
           <form onSubmit={handleRegister} className="auth-modal-form">
            <div className='ett' id='et1'>
+             <label typeof="input" className="text">Name:</label>
             <input
-           
+           name="input" 
               type="text"
-              placeholder="Nome completo"
+        
               required
               className="auth-modal-input"
               value={name}
@@ -212,10 +218,11 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
               )}
             </div>
              <div className='ett' id='et2'>
+               <label typeof="input" className="text">Email:</label>
             <input
       
               type="email"
-              placeholder="Email"
+           
               required
               className="auth-modal-input"
               value={email}
@@ -223,10 +230,11 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
             />
             </div>
              <div className='ett' id='et3'>
+               <label typeof="input" className="text">Senha:</label>
             <input
        
               type="password"
-              placeholder="Senha"
+             
               required
               className="auth-modal-input"
               value={password}
@@ -234,10 +242,11 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
             />
             </div>
              <div className='ett' id='et4'>
+               <label typeof="input" className="text">Confirme a senha:</label>
             <input
            
               type="password"
-              placeholder="Confirmar senha"
+           
               required
               className="auth-modal-input"
               value={confirmPassword}

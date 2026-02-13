@@ -2,12 +2,14 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useAuth } from '@/components/context/AuthContext';
 import { User, Settings, LogOut, ChevronDown, Library, Camera } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import AuthModal from './AuthModal';
 import api from '@/lib/api';
 import { toast } from 'react-hot-toast';
+import logarImg from '@/img/logar.png';
 
 export default function UserMenu() {
   const { user, signOut: logout, updateUser } = useAuth();
@@ -60,7 +62,7 @@ export default function UserMenu() {
     return (
       <div className="user-menu-auth">
         <button onClick={() => openAuth('login')} className="user-menu-login">
-          Logar
+          <Image src={logarImg} id='ImgLgFr' alt="Logar" width={36} height={32}  priority />
         </button>
         <AuthModal open={authOpen} initialTab={authTab} onClose={() => setAuthOpen(false)} />
       </div>

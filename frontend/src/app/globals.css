@@ -16,6 +16,12 @@
   padding: 0;
   margin: 0;
 }
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   background-color: var(--background);
   color: var(--foreground);
@@ -47,6 +53,9 @@ body::before {
     );
   z-index: -1;
   pointer-events: none;
+}
+#ImgLgFr{
+  margin-right: 16px;
 }
 #footer {
   background-color: #121823;
@@ -334,6 +343,8 @@ body::before {
     width: 100%;
     position: fixed; /* garante que o modal fique centralizado na tela */
     top: 0%;
+    
+
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 50;
@@ -343,18 +354,20 @@ body::before {
     @apply absolute inset-0 bg-black/40 backdrop-blur-sm;
   }
   .auth-modal-card {
-    background: rgb(5, 16, 28);
+    background: rgb(6, 1, 55);
     border: 3px solid rgb(0, 0, 0);
     border-radius: 15px;
-    width: 400px;
+    width: 80%;
     top: 6vh;
     left: 50%;
-
+max-width: 500px;
     transform: translate(-50%, 10%);
-    height: 73vh;
+    height: 75vh;
     position: absolute;
     z-index: 50;
     padding: 32px;
+    overflow: hidden;
+
   }
 
   .auth-modal-header {
@@ -410,15 +423,37 @@ body::before {
   }
 
   .ett {
-    background-color: #04050537;
-    height: 60px;
-    border-radius: 10px;
-    position: relative;
-    align-items: center;
-    align-self: center;
-    
-    align-content: center;
+   display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  max-width: 100%;
+  border-radius: 10px;
+
+  background-color: rgb(255, 255, 255);
+  height: 50px;
+  
   }
+  .ett label.text {
+  font-size: 0.75rem;
+  color: #03387d;
+  font-weight: 700;
+  position: relative;
+  top: 0.3rem;
+ left: 4%;
+  background: #cba7a700;
+  width: fit-content;
+}
+.ett input[type=text].input {
+  padding: 11px 10px;
+  font-size: 0.75rem;
+  border: 2px #818CF8 solid;
+  border-radius: 5px;
+  background: #e8e8e8;
+}
+.ett input[type=text].input:focus {
+  outline: none;
+}
   #et2 {
     top: 20px;
   }
@@ -435,9 +470,10 @@ body::before {
     top: 151%;
   }
   #all {
-    background-color: #22d3ee00;
+    background-color: #63808400;
     position: absolute;
     left: 10%;
+    max-height: 500px;
     right: 10%;
     top: 27%;
   }
@@ -451,9 +487,9 @@ body::before {
   }
   #arq {
     height: 50px;
-    background-color: #12d3da;
+    background-color: #095bc7;
     top: 10px;
-    color: rgb(36, 36, 36);
+    color: rgb(213, 213, 213);
     font-size: 90%;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     border-radius: 20px;
@@ -465,9 +501,9 @@ body::before {
     color: var(--accent);
   }
  .btn {
-    background-color: #22d3ee;
+  background-color: #03387d;
     width: 120px;
-    color: black;
+    color: rgb(255, 255, 255);
     font-size: 90%;
     align-items: center;
     align-content: center;
@@ -483,19 +519,17 @@ body::before {
     transition: background-color 0.3s ease;
   }
   .btn:hover {
-    background-color: #b4f5ff;
+     background-color: #006eff;
   }
   #sec {
     position: absolute;
     top: 17%;
-    width: 60%;
+    width: 80%;
     height: 7%;
     color: rgb(255, 255, 255);
-    font-size: 120%;
-    border-radius: 10px;
-    justify-self: center;
-    background: linear-gradient(to right,#b4f5ff, #b4f5ff,#022227,#022227,#022227);
-  }
+    font-size: 115%;
+    border-radius: 40px;
+    justify-self: center;  }
   
    #ftbtn {
  cursor: pointer;
@@ -505,7 +539,7 @@ body::before {
 
   
   #tpp {
-    background-color: #22d3ee00;
+    background-color: #15ceeb00;
     position: absolute;
     width: 80%;
     left: 10%;
@@ -803,6 +837,12 @@ body::before {
 }
 #bnt{
   z-index: 2;
+  color: white;
+  background-color: #1e70dc;
+}
+#bnt:hover{
+ 
+  background-color: #03387d;
 }
 .carde {
   width: 100%;
