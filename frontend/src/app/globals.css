@@ -401,9 +401,13 @@ max-width: 500px;
   }
   .auth-modal-input {
     height: 100%;
-    left: 50%;
-    transform: translate(4%, -0%);
+    left: 0;
+    transform: none;
     @apply w-full p-3 rounded-lg bg-transparent border border-transparent/10 text-transparent placeholder:text-slate-500 focus:border-transparent/30 outline-none;
+    width: 92%;
+    margin-left: 10%;
+    padding-left: 18px;
+    padding-right: 18px;
   }
   .auth-modal-file {
     left: 3.9%;
@@ -867,6 +871,13 @@ color: rgb(6, 1, 55);
   height: var(--height);
 top: 12%;
   bottom: 74%;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    transparent,
+    #000 100%,
+    transparent
+  );
   mask-image: linear-gradient(
     to right,
     transparent,
