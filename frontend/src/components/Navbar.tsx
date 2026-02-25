@@ -16,7 +16,11 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentY = window.scrollY;
+      const currentY =
+        window.scrollY ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop ||
+        0;
       const lastY = lastScrollYRef.current;
 
       if (currentY < 10) {
@@ -32,8 +36,13 @@ export default function Navbar() {
       lastScrollYRef.current = currentY;
     };
 
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    document.addEventListener('scroll', handleScroll, { passive: true, capture: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('scroll', handleScroll, true);
+    };
   }, []);
 
   const isActive = (path: string) => pathname === path;
