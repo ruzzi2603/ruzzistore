@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { LayoutDashboard, Library } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import UserMenu from './UserMenu';
 import { useAuth } from '@/components/context/AuthContext';
 import { toast } from 'react-hot-toast';
@@ -11,27 +11,30 @@ import { toast } from 'react-hot-toast';
 export default function Navbar() {
   const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const lastScrollYRef = useRef(0);
   const { user } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
       const currentY = window.scrollY;
+      const lastY = lastScrollYRef.current;
 
       if (currentY < 10) {
         setIsVisible(true);
-      } else if (currentY > lastScrollY) {
-        setIsVisible(false);
-      } else {
+      } else if (currentY < lastY) {
+        // Subiu a tela, mesmo pouco: navbar reaparece.
         setIsVisible(true);
+      } else if (currentY > lastY) {
+        // Desceu a tela: navbar some.
+        setIsVisible(false);
       }
 
-      setLastScrollY(currentY);
+      lastScrollYRef.current = currentY;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+  }, []);
 
   const isActive = (path: string) => pathname === path;
 
