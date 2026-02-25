@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
@@ -26,11 +26,23 @@ export class FavoritesService {
     let resolvedGameId = gameId;
 
     if (game?.url && game?.platform) {
+      const sanitizedTitle = String(game.title ?? 'Sem titulo').trim().slice(0, 191);
+      const sanitizedDescription = game.description
+        ? String(game.description).trim().slice(0, 4000)
+        : null;
+      const sanitizedImageUrl = game.imageUrl ? String(game.imageUrl).trim().slice(0, 500) : null;
+      const sanitizedPlatform = String(game.platform).trim().slice(0, 40);
+      const sanitizedUrl = String(game.url).trim().slice(0, 500);
+
+      if (!sanitizedPlatform || !sanitizedUrl) {
+        throw new BadRequestException('Dados do jogo invalidos para salvar favorito.');
+      }
+
       const existingGame = await this.prisma.game.findUnique({
         where: {
           platform_url: {
-            platform: String(game.platform),
-            url: String(game.url),
+            platform: sanitizedPlatform,
+            url: sanitizedUrl,
           },
         },
       });
@@ -40,15 +52,24 @@ export class FavoritesService {
       } else {
         const created = await this.prisma.game.create({
           data: {
-            title: String(game.title ?? 'Sem titulo'),
-            description: game.description ? String(game.description) : null,
-            imageUrl: game.imageUrl ? String(game.imageUrl) : null,
-            platform: String(game.platform),
+            title: sanitizedTitle || 'Sem titulo',
+            description: sanitizedDescription,
+            imageUrl: sanitizedImageUrl,
+            platform: sanitizedPlatform,
             isFree: Boolean(game.isFree),
-            url: String(game.url),
+            url: sanitizedUrl,
           },
         });
         resolvedGameId = created.id;
+      }
+    } else {
+      const storedGame = await this.prisma.game.findUnique({
+        where: { id: resolvedGameId },
+        select: { id: true },
+      });
+
+      if (!storedGame) {
+        throw new BadRequestException('Jogo nao encontrado para favoritar.');
       }
     }
 
