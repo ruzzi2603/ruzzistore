@@ -61,9 +61,9 @@ export default function Home() {
         ? (data as any).results
         : [];
       console.log('fetchGames:', { pageToLoad, received: safeData.length, filters });
-      setAllGames(safeData);
+      setAllGames(safeData as Game[]);
       // compute visible games right away in case effect hasn't run yet
-      let initialFiltered = safeData;
+      let initialFiltered: Game[] = safeData as Game[];
       if (filters.searchTerm) {
         const term = filters.searchTerm.toLowerCase();
         initialFiltered = initialFiltered.filter((g) =>
