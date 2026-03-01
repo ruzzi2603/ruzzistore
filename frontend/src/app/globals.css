@@ -967,3 +967,40 @@ top: 12%;
     scroll-behavior: auto !important;
   }
 }
+/* ===== Auth Modal Styles ===== */
+.auth-modal {
+  @apply fixed inset-0 flex items-center justify-center;
+}
+.auth-modal-backdrop {
+  @apply fixed inset-0;
+}
+.auth-modal-card {
+  @apply relative bg-(--surface) rounded-xl shadow-lg overflow-hidden w-full max-w-md sm:max-w-lg;
+}
+.auth-modal-tabs {
+  @apply flex w-full;
+}
+.auth-modal-tab {
+  @apply flex-1 py-2 text-center cursor-pointer select-none text-sm font-semibold;
+}
+.auth-modal-tab-active {
+  @apply text-cyan-300;
+}
+.auth-modal-tab-inactive {
+  @apply text-slate-400 hover:text-cyan-300;
+}
+.auth-modal-form {
+  @apply w-full;
+}
+.auth-modal-input {
+  @apply w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white focus:outline-none focus:border-cyan-400;
+}
+.auth-modal-file {
+  @apply block w-full text-sm text-slate-300 bg-slate-800 rounded-lg cursor-pointer;
+}
+.auth-modal-submit {
+  @apply bg-cyan-300 text-slate-900 rounded-lg font-semibold hover:bg-cyan-200 transition-colors disabled:opacity-60;
+}
+.auth-modal-preview {
+  @apply w-20 h-20 rounded-full object-cover mt-2;
+}
