@@ -339,48 +339,17 @@ body::before {
   }
   /* ===== AuthModal (frontend/src/components/AuthModal.tsx) ===== */
 
-  .auth-modal {
-    width: 100%;
-    position: fixed; /* garante que o modal fique centralizado na tela */
-    top: 0%;
-    
-
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 50;
-  }
-  .auth-modal-backdrop {
-    height: 170vh;
-    @apply absolute inset-0 bg-black/40 backdrop-blur-sm;
-  }
-  .auth-modal-card {
-    background: rgb(6, 1, 55);
-    border: 3px solid rgb(0, 0, 0);
-    border-radius: 15px;
-    width: 80%;
-    top: 6vh;
-    left: 50%;
-max-width: 500px;
-    transform: translate(-50%, 10%);
-    height: 75vh;
-    position: absolute;
-    z-index: 50;
-    padding: 32px;
-    overflow: hidden;
-
-  }
-
   .auth-modal-header {
-    @apply mb-4 flex  justify-between;
+    @apply flex items-center justify-between;
   }
   .auth-modal-brand {
-    @apply text-xs uppercase tracking-[0.3em] text-slate-400;
+    @apply text-2xl font-bold text-cyan-300;
   }
   .auth-modal-title {
-    @apply text-2xl font-semibold text-white mt-2;
+    @apply text-lg font-semibold text-white;
   }
   .auth-modal-close {
-    @apply text-slate-400 hover:text-white;
+    @apply text-slate-400 hover:text-slate-200 text-2xl font-light;
   }
   .auth-modal-tabs {
     @apply mb-4 flex gap-3;
@@ -400,30 +369,31 @@ max-width: 500px;
     @apply space-y-4;
   }
   .auth-modal-input {
-    height: 100%;
-    left: 0;
-    transform: none;
-    @apply w-full p-3 rounded-lg bg-transparent border border-transparent/10 text-transparent placeholder:text-slate-500 focus:border-transparent/30 outline-none;
-    width: 92%;
-    margin-left: 10%;
-    padding-left: 18px;
-    padding-right: 18px;
+    @apply w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white placeholder:text-slate-400 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-300/30;
   }
   .auth-modal-file {
-    left: 3.9%;
-    top: 28%;
-    position: absolute;
-    @apply w-full text-sm text-slate-300 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-cyan-300 file:text-slate-900 hover:file:bg-cyan-200;
+    @apply w-full text-sm text-slate-300 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-cyan-300 file:text-slate-900 file:font-semibold hover:file:bg-cyan-200 cursor-pointer;
   }
   .auth-modal-preview {
-    width: 0px;
-    display: none;
-    max-width: 30px;
-    top: 22%;
-    left: 4%;
+    @apply w-32 h-32 object-cover rounded-lg border border-slate-600;
   }
   .auth-modal-submit {
-    @apply w-full text-sm text-slate-300 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-cyan-300 file:text-slate-900 hover:file:bg-cyan-200;
+    @apply w-full py-2 px-4 bg-cyan-300 text-slate-900 font-semibold rounded-lg hover:bg-cyan-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .auth-modal-tabs {
+    @apply flex gap-0 border-b border-slate-700;
+  }
+  .auth-modal-tab {
+    @apply flex-1 py-3 text-sm font-semibold border-b-2 transition-colors;
+  }
+  .auth-modal-tab-active {
+    @apply border-b-cyan-300 text-cyan-300;
+  }
+  .auth-modal-tab-inactive {
+    @apply border-b-transparent text-slate-400 hover:text-slate-300;
+  }
+  .auth-modal-form {
+    @apply space-y-4;
   }
 
   .ett {
@@ -967,40 +937,4 @@ top: 12%;
     scroll-behavior: auto !important;
   }
 }
-/* ===== Auth Modal Styles ===== */
-.auth-modal {
-  @apply fixed inset-0 flex items-center justify-center;
-}
-.auth-modal-backdrop {
-  @apply fixed inset-0;
-}
-.auth-modal-card {
-  @apply relative bg-(--surface) rounded-xl shadow-lg overflow-hidden w-full max-w-md sm:max-w-lg;
-}
-.auth-modal-tabs {
-  @apply flex w-full;
-}
-.auth-modal-tab {
-  @apply flex-1 py-2 text-center cursor-pointer select-none text-sm font-semibold;
-}
-.auth-modal-tab-active {
-  @apply text-cyan-300;
-}
-.auth-modal-tab-inactive {
-  @apply text-slate-400 hover:text-cyan-300;
-}
-.auth-modal-form {
-  @apply w-full;
-}
-.auth-modal-input {
-  @apply w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white focus:outline-none focus:border-cyan-400;
-}
-.auth-modal-file {
-  @apply block w-full text-sm text-slate-300 bg-slate-800 rounded-lg cursor-pointer;
-}
-.auth-modal-submit {
-  @apply bg-cyan-300 text-slate-900 rounded-lg font-semibold hover:bg-cyan-200 transition-colors disabled:opacity-60;
-}
-.auth-modal-preview {
-  @apply w-20 h-20 rounded-full object-cover mt-2;
-}
+/* Auth Modal styles cleanup - old duplicate styles removed */

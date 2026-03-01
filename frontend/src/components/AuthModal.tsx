@@ -140,44 +140,37 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="fixed inset-0 bg-black/70" onClick={onClose}></div>
       <div className="relative bg-(--surface) max-w-md w-full rounded-xl shadow-lg flex flex-col max-h-[90vh]">
-        <div className="auth-modal-header flex items-center justify-between px-6 py-4 border-b border-slate-700">
+        {/* Header */}
+        <div className="px-6 py-4 border-b border-slate-700 flex items-center justify-between">
           <div>
-            <p className="auth-modal-brand text-2xl font-bold text-cyan-300">RuzziStore</p>
-            <h2 className="auth-modal-title text-lg font-semibold text-white">
+            <p className="text-sm font-semibold text-cyan-300 uppercase tracking-wider">RuzziStore</p>
+            <h2 className="text-lg font-bold text-white mt-1">
               {tab === 'login' ? 'Entrar na conta' : 'Criar conta'}
             </h2>
           </div>
-          <button onClick={onClose} className="auth-modal-close text-slate-400 hover:text-slate-200">
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-200 text-2xl leading-none">
             &times;
           </button>
         </div>
-        {/* eslint-disable-next-line */}
-      <div
-        className="auth-modal-tabs"
-        id="sec"
-        style={{
-          background: tab === 'login'
-            ? 'linear-gradient(to right, #03387d 50%, #022227 50%)'
-            : 'linear-gradient(to left, #03387d 50%, #022227 50%)'
-        } as any}
-      >
-  <button 
-    id='ftbtn-login'
-    className={`auth-modal-tab ${tab === 'login' ? 'auth-modal-tab-active' : 'auth-modal-tab-inactive'}`}
-    onClick={() => setTab('login')}
-  >
-    Entrar
-  </button>
-  <button 
-    id='ftbtn-register'
-    className={`auth-modal-tab ${tab === 'register' ? 'auth-modal-tab-active' : 'auth-modal-tab-inactive'}`}
-    onClick={() => setTab('register')}
-  >
-    Criar conta
-  </button>
-</div>
 
-        <div className="p-6 overflow-y-auto flex-1">
+        {/* Tabs */}
+        <div className="flex border-b border-slate-700 bg-slate-800/50">
+          <button 
+            className={`flex-1 py-3 px-4 text-sm font-semibold transition-colors ${tab === 'login' ? 'text-cyan-300 border-b-2 border-cyan-300' : 'text-slate-400 hover:text-slate-300'}`}
+            onClick={() => setTab('login')}
+          >
+            Entrar
+          </button>
+          <button 
+            className={`flex-1 py-3 px-4 text-sm font-semibold transition-colors ${tab === 'register' ? 'text-cyan-300 border-b-2 border-cyan-300' : 'text-slate-400 hover:text-slate-300'}`}
+            onClick={() => setTab('register')}
+          >
+            Criar conta
+          </button>
+        </div>
+
+        {/* Content */}
+        <div className="px-6 py-6 overflow-y-auto flex-1">
           {tab === 'login' ? (
             <form onSubmit={handleLogin} className="auth-modal-form space-y-4">
               <p className="text-xl font-medium text-white">Bem-vindo de volta!</p>
