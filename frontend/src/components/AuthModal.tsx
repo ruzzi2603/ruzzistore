@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import api from '@/lib/api';
@@ -15,6 +16,7 @@ interface AuthModalProps {
 
 export default function AuthModal({ open, initialTab = 'login', onClose }: AuthModalProps) {
   const { signIn } = useAuth();
+  const [mounted, setMounted] = useState(false);
   const [tab, setTab] = useState<'login' | 'register'>(initialTab);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,6 +27,9 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
   const [avatarUploading, setAvatarUploading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  ussetMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -38,6 +43,7 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
     };
   }, [open]);
 
+  if (!mounted || 
   if (!open) return null;
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -130,9 +136,9 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
     }
   };
 
-  return (
+  const modal = (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/70" onClick={onClose}></div>
+      <div className="fixed inset-0 bg-black/70" onClick={onClose}></div>
       <div className="relative bg-(--surface) max-w-md w-full rounded-xl shadow-lg flex flex-col max-h-[90vh]">
         <div className="auth-modal-header flex items-center justify-between px-6 py-4 border-b border-slate-700">
           <div>
@@ -340,4 +346,6 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
       </div>
     </div>
   );
+
+  return createPortal(modal, typeof document !== 'undefined' ? document.body : null);
 }
