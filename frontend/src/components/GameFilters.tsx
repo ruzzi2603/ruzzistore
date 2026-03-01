@@ -5,7 +5,7 @@ import { Search, ChevronDown, X } from 'lucide-react';
 
 interface FilterOptions {
   searchTerm: string;
-  genre: string;
+  genre: string; // stored value in english
   priceRange: 'all' | 'free' | 'bajo' | 'medio' | 'alto';
   platform: string;
   sortBy: 'relevance' | 'newest' | 'priceAsc' | 'priceDesc' | 'rating';
@@ -17,15 +17,15 @@ interface GameFiltersProps {
 }
 
 const genres = [
-  'Todos',
-  'Ação',
-  'Aventura',
-  'RPG',
-  'Estratégia',
-  'Simulação',
-  'Esporte',
-  'Puzzle',
-  'Shooter',
+  { value: '', label: 'Todos' },
+  { value: 'action', label: 'Ação' },
+  { value: 'adventure', label: 'Aventura' },
+  { value: 'role-playing', label: 'RPG' },
+  { value: 'strategy', label: 'Estratégia' },
+  { value: 'simulation', label: 'Simulação' },
+  { value: 'sports', label: 'Esporte' },
+  { value: 'puzzle', label: 'Puzzle' },
+  { value: 'shooter', label: 'Shooter' },
 ];
 
 const platforms = [
@@ -57,7 +57,7 @@ export default function GameFilters({ onFiltersChange, isOpen = false }: GameFil
   const [showFilters, setShowFilters] = useState(isOpen);
   const [filters, setFilters] = useState<FilterOptions>({
     searchTerm: '',
-    genre: 'Todos',
+    genre: '',
     priceRange: 'all',
     platform: 'Todos',
     sortBy: 'relevance',
@@ -75,7 +75,7 @@ export default function GameFilters({ onFiltersChange, isOpen = false }: GameFil
   const handleReset = () => {
     const defaultFilters: FilterOptions = {
       searchTerm: '',
-      genre: 'Todos',
+      genre: '',
       priceRange: 'all',
       platform: 'Todos',
       sortBy: 'relevance',
@@ -85,7 +85,7 @@ export default function GameFilters({ onFiltersChange, isOpen = false }: GameFil
   };
 
   const isFiltered =
-    filters.genre !== 'Todos' ||
+    filters.genre !== '' ||
     filters.priceRange !== 'all' ||
     filters.platform !== 'Todos' ||
     filters.sortBy !== 'relevance' ||
@@ -145,9 +145,9 @@ export default function GameFilters({ onFiltersChange, isOpen = false }: GameFil
               onChange={(e) => handleFilterChange({ genre: e.target.value })}
               className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white focus:outline-none focus:border-cyan-400"
             >
-              {genres.map((genre) => (
-                <option key={genre} value={genre}>
-                  {genre}
+              {genres.map((g) => (
+                <option key={g.value} value={g.value}>
+                  {g.label}
                 </option>
               ))}
             </select>

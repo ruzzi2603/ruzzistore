@@ -13,6 +13,8 @@ interface Game {
   platform?: string;
   url?: string;
   isFree?: boolean;
+  rating?: number | null;
+  genres?: string[];
 }
 
 export default function Home() {
@@ -57,8 +59,7 @@ export default function Home() {
         ? (data as any).results
         : [];
       setAllGames(safeData);
-      const visibleCount = Math.min(safeData.length, pageToLoad * PAGE_SIZE);
-      setGames(safeData.slice(0, visibleCount));
+      // page is updated automatically by filtering effect below
       setPage(pageToLoad);
     } catch {
       if (isInitial) setGames([]);
@@ -113,6 +114,7 @@ export default function Home() {
     }, 50);
   };
 
+  // load initial list
   useEffect(() => {
     fetchGames(1, true);
   }, []);
@@ -126,6 +128,31 @@ export default function Home() {
     setPage(nextPage);
     setGames(allGames.slice(0, nextPage * PAGE_SIZE));
   };
+
+  // apply filters whenever allGames, filters or page change
+  useEffect(() => {
+    let filtered = allGames;
+
+    if (filters.searchTerm) {
+      const term = filters.searchTerm.toLowerCase();
+      filtered = filtered.filter((g) =>
+        g.title.toLowerCase().includes(term)
+      );
+    }
+
+    if (filters.genre) {
+      const genreVal = filters.genre.toLowerCase();
+      filtered = filtered.filter((g) =>
+        Array.isArray(g.genres) &&
+        g.genres.some((gn) => gn.toLowerCase().includes(genreVal))
+      );
+    }
+
+    // platform/price sorting currently not supported by RAWG results
+
+    const visibleCount = Math.min(filtered.length, page * PAGE_SIZE);
+    setGames(filtered.slice(0, visibleCount));
+  }, [allGames, filters, page]);
 
   const scrollToHighlights = () => {
     const el = document.getElementById("highlights-section");

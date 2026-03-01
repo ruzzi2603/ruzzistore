@@ -37,6 +37,14 @@ export class GamesService {
           platform: 'rawg',
           url: `https://rawg.io/games/${slug}`,
           isFree: false,
+          // include rating/metacritic when available for better frontend display
+          rating: typeof item?.rating === 'number' ? item.rating : null,
+          metacritic: typeof item?.metacritic === 'number' ? item.metacritic : null,
+          // RAWG provides genre information that we can pass through
+          genres: Array.isArray(item?.genres)
+            ? item.genres.map((g: any) => g.name || '').filter(Boolean)
+            : [],
+          // RAWG doesn't provide prices, so frontend will continue showing "Preço não informado"
         };
       });
     }

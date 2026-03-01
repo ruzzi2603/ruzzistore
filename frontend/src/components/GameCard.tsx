@@ -17,6 +17,7 @@ interface GameCardProps {
     platform?: string;
     url?: string;
     isFree?: boolean;
+    rating?: number | null;
   };
   isFavorited?: boolean;
   onFavoriteToggle?: (id: string | number) => Promise<void>;
@@ -130,7 +131,11 @@ const GameCard = ({ game, isFavorited = false, onFavoriteToggle, user }: GameCar
           </span>
           <div className="game-card-rating" aria-label="Classificação do jogo">
             <Star size={12} fill="currentColor" />
-            <span className="game-card-rating-text" aria-label="Avaliação: 4.8 de 5">4.8</span>
+            <span className="game-card-rating-text" aria-label={`Avaliação: ${
+              typeof game.rating === 'number' ? game.rating.toFixed(1) : 'N/A'
+            } de 5`}>
+              {typeof game.rating === 'number' ? game.rating.toFixed(1) : '—'}
+            </span>
           </div>
         </div>
 
