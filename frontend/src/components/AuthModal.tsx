@@ -131,10 +131,9 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center px-4 sm:px-6">
-      <div className="auth-modal-backdrop fixed inset-0 bg-black/70" onClick={onClose}></div>
-
-      <div className="auth-modal-card relative bg-(--surface) max-w-md w-full rounded-xl shadow-lg overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      <div className="absolute inset-0 bg-black/70" onClick={onClose}></div>
+      <div className="relative bg-(--surface) max-w-md w-full mx-4 rounded-xl shadow-lg overflow-hidden">
         <div className="auth-modal-header flex items-center justify-between px-6 py-4 border-b border-slate-700">
           <div>
             <p className="auth-modal-brand text-2xl font-bold text-cyan-300">RuzziStore</p>
