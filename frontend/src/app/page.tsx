@@ -49,6 +49,7 @@ export default function Home() {
         { cache: "no-store" },
       );
       if (!res.ok) {
+        console.warn('fetchGames: response not ok', res.status);
         if (isInitial) setGames([]);
         return;
       }
@@ -58,6 +59,7 @@ export default function Home() {
         : Array.isArray((data as any)?.results)
         ? (data as any).results
         : [];
+      console.debug('fetchGames:', { pageToLoad, received: safeData.length, filters });
       setAllGames(safeData);
       // compute visible games right away in case effect hasn't run yet
       let initialFiltered = safeData;
@@ -74,10 +76,12 @@ export default function Home() {
           g.genres.some((gn) => gn.toLowerCase().includes(genreVal))
         );
       }
+      console.debug('fetchGames initialFiltered count', initialFiltered.length);
       const visibleCount = Math.min(initialFiltered.length, pageToLoad * PAGE_SIZE);
       setGames(initialFiltered.slice(0, visibleCount));
       setPage(pageToLoad);
-    } catch {
+    } catch (err) {
+      console.error('fetchGames error', err);
       if (isInitial) setGames([]);
     } finally {
       if (isInitial) {
