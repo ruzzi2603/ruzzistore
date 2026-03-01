@@ -133,7 +133,7 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/70" onClick={onClose}></div>
-      <div className="relative bg-(--surface) max-w-md w-full max-h-[90vh] overflow-y-auto rounded-xl shadow-lg">
+      <div className="relative bg-(--surface) max-w-md w-full rounded-xl shadow-lg flex flex-col max-h-[90vh]">
         <div className="auth-modal-header flex items-center justify-between px-6 py-4 border-b border-slate-700">
           <div>
             <p className="auth-modal-brand text-2xl font-bold text-cyan-300">RuzziStore</p>
@@ -171,7 +171,7 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
   </button>
 </div>
 
-        <div className="p-6">
+        <div className="p-6 overflow-y-auto flex-1">
           {tab === 'login' ? (
             <form onSubmit={handleLogin} className="auth-modal-form space-y-4">
               <p className="text-xl font-medium text-white">Bem-vindo de volta!</p>
