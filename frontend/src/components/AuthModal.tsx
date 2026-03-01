@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import api from '@/lib/api';
 import { useAuth } from '@/components/context/AuthContext';
@@ -22,6 +23,8 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [avatarUploading, setAvatarUploading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   useEffect(() => {
     if (!open) return;
@@ -50,10 +53,19 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
     }
   };
 
+  const passwordValid = (pwd: string) => {
+    // mínimo 8 caracteres, uma maiúscula e um número
+    return /^(?=.*[A-Z])(?=.*\d).{8,}$/.test(pwd);
+  };
+
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      toast.error('As senhas nao coincidem');
+      toast.error('As senhas não coincidem');
+      return;
+    }
+    if (!passwordValid(password)) {
+      toast.error('Senha deve ter ≥8 caracteres, uma maiúscula e um número');
       return;
     }
     setLoading(true);
@@ -119,29 +131,31 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
   };
 
   return (
-    <div className="auth-modal">
-      <div className="auth-modal-backdrop" onClick={onClose}></div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center px-4 sm:px-6">
+      <div className="auth-modal-backdrop fixed inset-0 bg-black/70" onClick={onClose}></div>
 
-      <div className="auth-modal-card">
-        <div className="auth-modal-header" id='tpp'>
+      <div className="auth-modal-card relative bg-(--surface) max-w-md w-full rounded-xl shadow-lg overflow-hidden">
+        <div className="auth-modal-header flex items-center justify-between px-6 py-4 border-b border-slate-700">
           <div>
-            <p className="auth-modal-brand">RuzziStore</p>
-            <h2 className="auth-modal-title">
+            <p className="auth-modal-brand text-2xl font-bold text-cyan-300">RuzziStore</p>
+            <h2 className="auth-modal-title text-lg font-semibold text-white">
               {tab === 'login' ? 'Entrar na conta' : 'Criar conta'}
             </h2>
           </div>
-          <button onClick={onClose} className="auth-modal-close">x</button>
+          <button onClick={onClose} className="auth-modal-close text-slate-400 hover:text-slate-200">
+            &times;
+          </button>
         </div>
         {/* eslint-disable-next-line */}
       <div
-  className="auth-modal-tabs"
-  id="sec"
-  style={{
-    background: tab === 'login'
-      ? 'linear-gradient(to right, #03387d 50%, #022227 50%)'
-      : 'linear-gradient(to left, #03387d 50%, #022227 50%)'
-  } as any}
->
+        className="auth-modal-tabs"
+        id="sec"
+        style={{
+          background: tab === 'login'
+            ? 'linear-gradient(to right, #03387d 50%, #022227 50%)'
+            : 'linear-gradient(to left, #03387d 50%, #022227 50%)'
+        } as any}
+      >
   <button 
     id='ftbtn-login'
     className={`auth-modal-tab ${tab === 'login' ? 'auth-modal-tab-active' : 'auth-modal-tab-inactive'}`}
@@ -158,113 +172,172 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
   </button>
 </div>
 
-        {tab === 'login' ? (
-              <div id='all2'>
-          <form onSubmit={handleLogin} className="auth-modal-form">
-            <div className='txtLg'>Bem-vindo de volta!</div>
-            <div className='ett' id='et3'>
-               <label typeof="input" className="text">Email:</label>
-            <input
-              type="email"
-              placeholder="seu@email.com"
-              aria-label="Email"
-              required
-              className="auth-modal-input"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            </div>
-             <div className='ett' id='et42'>
-               <label typeof="input" className="text">Senha:</label>
-            <input
-              type="password"
-              placeholder="sua senha segura"
-              aria-label="Senha"
-              required
-              className="auth-modal-input"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            /></div>
-               <div className='btn' id='btnSecd'>
-            <button type="submit" disabled={loading} className="auth-modal-submit" >
-              {loading ? <Loader /> : 'Entrar'}
-            </button>
-            </div>
-          </form>
-          </div>
-        ) : (
-          <div id='all'>
-          <form onSubmit={handleRegister} className="auth-modal-form">
-           <div className='ett' id='et1'>
-             <label typeof="input" className="text">Name:</label>
-            <input
-           name="fullname"
-              type="text"
-              placeholder="seu nome completo"
-              aria-label="Nome completo"
-              required
-              className="auth-modal-input"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            /> </div>
-            <div className="space-y-2" id='arq'>
-              <input
-                type="file"
-                accept="image/*"
-                aria-label="Enviar foto de perfil"
-                className="auth-modal-file"
-                onChange={(e) => handleAvatarFile(e.target.files?.[0])}
-              />
-              {avatar && (
-                <img src={avatar} alt="Preview" className="auth-modal-preview" />
-              )}
-              {avatarUploading && (
-                <p className="text-xs text-slate-400">Enviando imagem...</p>
-              )}
-            </div>
-             <div className='ett' id='et2'>
-               <label typeof="input" className="text">Email:</label>
-            <input
-              type="email"
-              placeholder="seu@email.com"
-              aria-label="Email"
-              required
-              className="auth-modal-input"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            </div>
-             <div className='ett' id='et3'>
-               <label typeof="input" className="text">Senha:</label>
-            <input
-              type="password"
-              placeholder="senha (mín 6 caracteres)"
-              aria-label="Senha"
-              required
-              className="auth-modal-input"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            </div>
-             <div className='ett' id='et4'>
-               <label typeof="input" className="text">Confirme a senha:</label>
-            <input
-              type="password"
-              placeholder="confirme sua senha"
-              aria-label="Confirmar senha"
-              required
-              className="auth-modal-input"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            /></div>
-            <div className='btn'>
-            <button type="submit" disabled={loading} className="auth-modal-submit">
-              {loading ? <Loader /> : 'Criar conta'}
-            </button>
-            </div>
-          </form>
-          </div>
-        )}
+        <div className="p-6">
+          {tab === 'login' ? (
+            <form onSubmit={handleLogin} className="auth-modal-form space-y-4">
+              <p className="text-xl font-medium text-white">Bem-vindo de volta!</p>
+
+              <div className="flex flex-col">
+                <label className="text-sm text-slate-300 mb-1" htmlFor="email-login">
+                  Email
+                </label>
+                <input
+                  id="email-login"
+                  type="email"
+                  placeholder="seu@email.com"
+                  aria-label="Email"
+                  required
+                  className="auth-modal-input"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+
+              <div className="flex flex-col">
+                <label className="text-sm text-slate-300 mb-1" htmlFor="password-login">
+                  Senha
+                </label>
+                <div className="relative flex items-center">
+                  <input
+                    id="password-login"
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="sua senha segura"
+                    aria-label="Senha"
+                    required
+                    className="auth-modal-input"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 text-slate-400 hover:text-slate-200"
+                    title={showPassword ? 'Esconder senha' : 'Mostrar senha'}
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex justify-end">
+                <button type="submit" disabled={loading} className="auth-modal-submit px-6 py-2">
+                  {loading ? <Loader /> : 'Entrar'}
+                </button>
+              </div>
+            </form>
+          ) : (
+            <form onSubmit={handleRegister} className="auth-modal-form space-y-4">
+              <p className="text-xl font-medium text-white">Crie sua conta</p>
+
+              <div className="flex flex-col">
+                <label className="text-sm text-slate-300 mb-1" htmlFor="name-register">
+                  Nome completo
+                </label>
+                <input
+                  id="name-register"
+                  name="fullname"
+                  type="text"
+                  placeholder="seu nome completo"
+                  aria-label="Nome completo"
+                  required
+                  className="auth-modal-input"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <input
+                  type="file"
+                  accept="image/*"
+                  aria-label="Enviar foto de perfil"
+                  className="auth-modal-file"
+                  onChange={(e) => handleAvatarFile(e.target.files?.[0])}
+                />
+                {avatar && (
+                  <img src={avatar} alt="Preview" className="auth-modal-preview" />
+                )}
+                {avatarUploading && (
+                  <p className="text-xs text-slate-400">Enviando imagem...</p>
+                )}
+              </div>
+
+              <div className="flex flex-col">
+                <label className="text-sm text-slate-300 mb-1" htmlFor="email-register">
+                  Email
+                </label>
+                <input
+                  id="email-register"
+                  type="email"
+                  placeholder="seu@email.com"
+                  aria-label="Email"
+                  required
+                  className="auth-modal-input"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+
+              <div className="flex flex-col">
+                <label className="text-sm text-slate-300 mb-1" htmlFor="password-register">
+                  Senha
+                </label>
+                <div className="relative flex items-center">
+                  <input
+                    id="password-register"
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Senha (≥8 caract., 1 maiúsc., 1 número)"
+                    aria-label="Senha"
+                    required
+                    className="auth-modal-input"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 text-slate-400 hover:text-slate-200"
+                    title={showPassword ? 'Esconder senha' : 'Mostrar senha'}
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex flex-col">
+                <label className="text-sm text-slate-300 mb-1" htmlFor="confirm-password">
+                  Confirmar senha
+                </label>
+                <div className="relative flex items-center">
+                  <input
+                    id="confirm-password"
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    placeholder="confirme sua senha"
+                    aria-label="Confirmar senha"
+                    required
+                    className="auth-modal-input"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-3 text-slate-400 hover:text-slate-200"
+                    title={showConfirmPassword ? 'Esconder senha' : 'Mostrar senha'}
+                  >
+                    {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex justify-end">
+                <button type="submit" disabled={loading} className="auth-modal-submit px-6 py-2">
+                  {loading ? <Loader /> : 'Criar conta'}
+                </button>
+              </div>
+            </form>
+          )}
+        </div>
       </div>
     </div>
   );
