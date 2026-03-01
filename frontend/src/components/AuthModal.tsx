@@ -28,7 +28,8 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  ussetMounted(true);
+  useEffect(() => {
+    setMounted(true);
   }, []);
 
   useEffect(() => {
@@ -43,8 +44,7 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
     };
   }, [open]);
 
-  if (!mounted || 
-  if (!open) return null;
+  if (!mounted || !open) return null;
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
