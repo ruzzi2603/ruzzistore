@@ -29,7 +29,7 @@ export default function Home() {
   const [showLatest, setShowLatest] = useState(false);
   const [filters, setFilters] = useState({
     searchTerm: '',
-    genre: 'Todos',
+    genre: '',
     priceRange: 'all',
     platform: 'Todos',
     sortBy: 'relevance',
