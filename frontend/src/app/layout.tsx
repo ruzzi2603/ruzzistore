@@ -4,6 +4,7 @@ import { Toaster } from "react-hot-toast";
 import { Inter } from "next/font/google";
 import { AuthProvider } from "@/components/context/AuthContext";
 import Navbar from "@/components/Navbar";
+import SchemaOrg from "@/components/SchemaOrg";
 import Image from "next/image";
 import logo from "@/img/logo.jpg";
 
@@ -20,11 +21,65 @@ const WHATSAPP_URL =
   "https://wa.me/5511999999999?text=Ola%2C%20vim%20pelo%20site%20da%20RuzziStore";
 
 export const metadata: Metadata = {
-  title: "RUZZISTORE | Plataforma de Jogos",
+  title: "RuzziStore | Loja de Jogos Digitais - Melhores Ofertas e Promoções",
   description:
-    "Plataforma de jogos. Explore nossa coleção, gerencie sua biblioteca e aproveite ofertas exclusivas.",
+    "RuzziStore: A plataforma completa para compra e gerenciamento de jogos digitais. Explore uma vasta coleção de games, aproveite ofertas exclusivas, gerencie sua biblioteca pessoal e descubra novos lançamentos. Segura, rápida e confiável.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"),
+  alternates: {
+    canonical: "/",
+    languages: {
+      "pt-BR": "/",
+    },
+  },
+  keywords: [
+    "jogos digitais",
+    "loja de jogos",
+    "comprar jogos online",
+    "steam",
+    "epic games",
+    "gog",
+    "amazon prime gaming",
+    "promoções de jogos",
+    "oferta de games",
+    "bilbioteca de jogos online"
+  ],
+  openGraph: {
+    type: "website",
+    locale: "pt_BR",
+    url: "/",
+    title: "RuzziStore | Loja de Jogos Digitais - Melhores Ofertas",
+    description: "Compre jogos digitais com segurança. Acesse Steam, Epic Games, GOG e mais. Melhores preços e promoções exclusivas.",
+    siteName: "RuzziStore",
+    images: [
+      {
+        url: "/img/logoFirst.png",
+        width: 1200,
+        height: 630,
+        alt: "RuzziStore - Loja de Jogos Digitais",
+        type: "image/png",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "RuzziStore | Loja de Jogos Digitais",
+    description: "Melhores jogos digitais com promoções exclusivas. Compre com segurança!",
+    images: ["/img/logoFirst.png"],
+  },
   icons: {
     icon: [{ url: "/img/logoFirst.png", sizes: "128x128", type: "image/png" }],
+    apple: { url: "/img/logoFirst.png", sizes: "180x180" },
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 
@@ -35,13 +90,28 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-br" className="dark">
+      <head>
+        <SchemaOrg />
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+      </head>
       <body
         className={`${inter.className} var(--background) var(--foreground) min-h-screen antialiased selection:bg-cyan-400/30`}
       >
+        {/* Skip to main content link para acessibilidade */}
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-0 focus:left-0 focus:z-50 focus:bg-cyan-300 focus:text-slate-900 focus:px-4 focus:py-2 focus:font-semibold"
+        >
+          Pular para conteúdo principal
+        </a>
+        
         <AuthProvider>
           <div className="relative flex min-h-screen flex-col">
             <Navbar />
-            <main className="flex-1 w-full">{children}</main>
+            <main className="flex-1 w-full" id="main">{children}</main>
 
             <footer
               className="border-t border-white/5 py-8 mt-auto var(--surface)/50"

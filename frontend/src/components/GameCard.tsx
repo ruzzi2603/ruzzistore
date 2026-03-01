@@ -45,9 +45,20 @@ const GameCard = ({ game, isFavorited = false, onFavoriteToggle, user }: GameCar
   };
 
   const handleCardClick = () => {
-    if (game.url && typeof window !== 'undefined') {
-      window.open(game.url, '_blank', 'noopener,noreferrer');
+    const params = new URLSearchParams();
+    params.set('title', game.title || '');
+    params.set('platform', game.platform || '');
+    params.set('url', game.url || '');
+    params.set('imageUrl', game.image || game.imageUrl || '');
+    params.set('isFree', String(Boolean(game.isFree)));
+    if (typeof game.originalPrice === 'number') {
+      params.set('originalPrice', String(game.originalPrice));
     }
+    if (typeof game.promotionPrice === 'number') {
+      params.set('promotionPrice', String(game.promotionPrice));
+    }
+
+    router.push(`/game/${game.id}?${params.toString()}`);
   };
 
   const originalPrice = game.originalPrice ?? 0;
@@ -64,11 +75,17 @@ const GameCard = ({ game, isFavorited = false, onFavoriteToggle, user }: GameCar
 
   return (
     <div
-      className="game-card-root group"
+      className="game-card-root group cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleCardClick}
-      role={game.url ? 'button' : undefined}
+      role="link"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          handleCardClick();
+        }
+      }}
     >
       {discount > 0 && (
         <div className="game-card-badge">
@@ -84,36 +101,40 @@ const GameCard = ({ game, isFavorited = false, onFavoriteToggle, user }: GameCar
             ? 'game-card-fav-active'
             : 'game-card-fav-inactive'
         }`}
+        aria-label={isFavorited ? `Remover ${game.title} dos favoritos` : `Adicionar ${game.title} aos favoritos`}
+        title={isFavorited ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
       >
         <Heart
           size={18}
           fill={isFavorited ? 'currentColor' : 'none'}
           className={loading ? 'animate-pulse' : ''}
+          aria-hidden="true"
         />
       </button>
 
       <div className="game-card-media">
         <Image
           src={game.image || game.imageUrl || 'https://picsum.photos/seed//800/450'}
-          alt={game.title}
+          alt={`Imagem de capa do jogo ${game.title} na plataforma ${game.platform || 'digital'}`}
           fill
           className={`object-cover transition-transform duration-500 ${isHovered ? 'scale-110' : 'scale-100'}`}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
         <div className="game-card-media-overlay" />
       </div>
 
       <div className="game-card-body">
         <div className="game-card-meta">
-          <span className="game-card-platform">
+          <span className="game-card-platform" aria-label={`Plataforma: ${game.platform || 'N/A'}`}>
             {game.platform || 'plataforma'}
           </span>
-          <div className="game-card-rating">
+          <div className="game-card-rating" aria-label="Classificação do jogo">
             <Star size={12} fill="currentColor" />
-            <span className="game-card-rating-text">4.8</span>
+            <span className="game-card-rating-text" aria-label="Avaliação: 4.8 de 5">4.8</span>
           </div>
         </div>
 
-        <h3 className="game-card-title">
+        <h3 className="game-card-title" id={`game-title-${game.id}`}>
           {game.title}
         </h3>
 
@@ -133,8 +154,12 @@ const GameCard = ({ game, isFavorited = false, onFavoriteToggle, user }: GameCar
             )}
           </div>
 
-          <button className="game-card-cart">
-            <ShoppingCart size={20} />
+          <button 
+            className="game-card-cart"
+            aria-label={`Adicionar ${game.title} ao carrinho`}
+            title="Adicionar ao carrinho"
+          >
+            <ShoppingCart size={20} aria-hidden="true" />
           </button>
         </div>
       </div>

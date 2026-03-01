@@ -1,9 +1,10 @@
-"use client";
+'use client';
 
-import { useEffect, useState, type CSSProperties } from "react";
-import GamesGrid from "@/components/Game/GamesGrid";
-import CookieBanner from "@/components/CookieBanner";
-import { useAuth } from "@/components/context/AuthContext";
+import { useEffect, useState, type CSSProperties } from 'react';
+import GamesGrid from '@/components/Game/GamesGrid';
+import CookieBanner from '@/components/CookieBanner';
+import GameFilters from '@/components/GameFilters';
+import { useAuth } from '@/components/context/AuthContext';
 
 interface Game {
   id: number | string;
@@ -24,6 +25,13 @@ export default function Home() {
   const [loadingMore, setLoadingMore] = useState(false);
   const [page, setPage] = useState(1);
   const [showLatest, setShowLatest] = useState(false);
+  const [filters, setFilters] = useState({
+    searchTerm: '',
+    genre: 'Todos',
+    priceRange: 'all',
+    platform: 'Todos',
+    sortBy: 'relevance',
+  });
   const PAGE_SIZE = 20;
 
   const fetchGames = async (pageToLoad: number, isInitial = false) => {
@@ -151,7 +159,7 @@ export default function Home() {
             </p>
 
             <h1 className="text-4xl md:text-5xl font-semibold mt-3 text-white inline-flex items-center gap-3">
-              <span>Plataforma de jogos digitais</span>
+              <span>Plataforma de Jogos Digitais - Compre Games Online com Segurança</span>
             </h1>
 
             <p className="text-slate-400 mt-4 max-w-2xl">
@@ -173,6 +181,7 @@ export default function Home() {
               Mais de 1000+ jogos disponíveis
             </p>
 
+            {/* eslint-disable-next-line */}
             <div
               className="slider"
               style={
@@ -180,80 +189,89 @@ export default function Home() {
                   "--width": "250px",
                   "--height": "300px",
                   "--quantity": 9,
-                } as CSSProperties
+                } as any
               }
             >
               <div className="list">
+                {/* eslint-disable-next-line */}
                 <div
                   className="item"
-                  style={{ "--position": 1 } as CSSProperties}
+                  style={{ "--position": 1 } as any}
                 >
                   <div className="carde">
-                    <img src="/img/img.webp" alt="Game Cover" className="w-full h-full object-cover" />
+                    <img src="/img/img.webp" alt="Capa de jogo destacada 1 - RuzziStore" className="w-full h-full object-cover" />
                   </div>
                 </div>
+                {/* eslint-disable-next-line */}
                 <div
                   className="item"
-                  style={{ "--position": 2 } as CSSProperties}
+                  style={{ "--position": 2 } as any}
                 >
                   <div className="carde">
-                    <img src="/img/img2.webp" alt="Game Cover" className="w-full h-full object-cover" />
+                    <img src="/img/img2.webp" alt="Capa de jogo destacada 2 - RuzziStore" className="w-full h-full object-cover" />
                   </div>
                 </div>
+                {/* eslint-disable-next-line */}
                 <div
                   className="item"
-                  style={{ "--position": 3 } as CSSProperties}
+                  style={{ "--position": 3 } as any}
                 >
                   <div className="carde">
-                    <img src="/img/img3.webp" alt="Game Cover" className="w-full h-full object-cover" />
+                    <img src="/img/img3.webp" alt="Capa de jogo destacada 3 - RuzziStore" className="w-full h-full object-cover" />
                   </div>
                 </div>
+                {/* eslint-disable-next-line */}
                 <div
                   className="item"
-                  style={{ "--position": 4 } as CSSProperties}
+                  style={{ "--position": 4 } as any}
                 >
                   <div className="carde">
-                    <img src="/img/img4.webp" alt="Game Cover" className="w-full h-full object-cover" />
+                    <img src="/img/img4.webp" alt="Capa de jogo destacada 4 - RuzziStore" className="w-full h-full object-cover" />
                   </div>
                 </div>
+                {/* eslint-disable-next-line */}
                 <div
                   className="item"
-                  style={{ "--position": 5 } as CSSProperties}
+                  style={{ "--position": 5 } as any}
                 >
                   <div className="carde">
-                    <img src="/img/img5.webp" alt="Game Cover" className="w-full h-full object-cover" />
+                    <img src="/img/img5.webp" alt="Capa de jogo destacada 5 - RuzziStore" className="w-full h-full object-cover" />
                   </div>
                 </div>
+                {/* eslint-disable-next-line */}
                 <div
                   className="item"
-                  style={{ "--position": 6 } as CSSProperties}
+                  style={{ "--position": 6 } as any}
                 >
                   <div className="carde">
-                    <img src="/img/img6.webp" alt="Game Cover" className="w-full h-full object-cover" />
+                    <img src="/img/img6.webp" alt="Capa de jogo destacada 6 - RuzziStore" className="w-full h-full object-cover" />
                   </div>
                 </div>
+                {/* eslint-disable-next-line */}
                 <div
                   className="item"
-                  style={{ "--position": 7 } as CSSProperties}
+                  style={{ "--position": 7 } as any}
                 >
                   <div className="carde">
-                    <img src="/img/img7.avif" alt="Game Cover" className="w-full h-full object-cover" />
+                    <img src="/img/img7.avif" alt="Capa de jogo destacada 7 - RuzziStore" className="w-full h-full object-cover" />
                   </div>
                 </div>
+                {/* eslint-disable-next-line */}
                 <div
                   className="item"
-                  style={{ "--position": 8 } as CSSProperties}
+                  style={{ "--position": 8 } as any}
                 >
                   <div className="carde">
-                    <img src="/img/img8.webp" alt="Game Cover" className="w-full h-full object-cover" />
+                    <img src="/img/img8.webp" alt="Capa de jogo destacada 8 - RuzziStore" className="w-full h-full object-cover" />
                   </div>
                 </div>
+                {/* eslint-disable-next-line */}
                 <div
                   className="item"
-                  style={{ "--position": 9 } as CSSProperties}
+                  style={{ "--position": 9 } as any}
                 >
                   <div className="carde">
-                    <img src="/img/img9.webp" alt="Game Cover" className="w-full h-full object-cover" />
+                    <img src="/img/img9.webp" alt="Capa de jogo destacada 9 - RuzziStore" className="w-full h-full object-cover" />
                   </div>
                 </div>
               </div>
@@ -261,9 +279,17 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="highlights-section">
+        {/* Filters Section */}
+        <section id="filters-section" className="mb-12" aria-label="Seção de filtros de jogos">
+          <GameFilters 
+            onFiltersChange={setFilters}
+            isOpen={false}
+          />
+        </section>
+
+        <section id="highlights-section" aria-labelledby="highlights-heading" role="region">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-semibold">Jogos em alta</h2>
+            <h2 id="highlights-heading" className="text-2xl font-semibold">Jogos em alta</h2>
             <span className="text-sm text-slate-400">Atualizado agora</span>
           </div>
 

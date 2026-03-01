@@ -48,27 +48,29 @@ export default function Navbar() {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <nav className={`navbar ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
+    <nav className={`navbar ${isVisible ? 'translate-y-0' : '-translate-y-full'}`} aria-label="Navegação principal">
       <div className="navbar-inner">
         <div id='title'>
-        <Link href="/" className="navbar-brand">
+        <Link href="/" className="navbar-brand" aria-label="RuzziStore - Home">
           <span className="navbar-brand-text">
             RUZZI<span className="navbar-brand-accent">STORE</span>
           </span>
         </Link>
 </div>
-        <div className="navbar-links">
+        <div className="navbar-links" role="navigation" aria-label="Menu de navegação">
           <Link
             href="/dashboard"
             className={`navbar-link ${isActive('/dashboard') ? 'navbar-link-active' : 'navbar-link-inactive'}`}
+            aria-current={isActive('/dashboard') ? 'page' : undefined}
           >
-            <LayoutDashboard size={18} />
+            <LayoutDashboard size={18} aria-hidden="true" />
             Dashboard
           </Link>
 
           <Link
             href="/dashboard/library"
             className={`navbar-link ${pathname.startsWith('/dashboard/library') ? 'navbar-link-active' : 'navbar-link-inactive'}`}
+            aria-current={pathname.startsWith('/dashboard/library') ? 'page' : undefined}
             onClick={(e) => {
               if (!user) {
                 e.preventDefault();
@@ -76,7 +78,7 @@ export default function Navbar() {
               }
             }}
           >
-            <Library size={18} />
+            <Library size={18} aria-hidden="true" />
             Biblioteca
           </Link>
         </div>

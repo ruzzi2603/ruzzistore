@@ -132,7 +132,7 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
           </div>
           <button onClick={onClose} className="auth-modal-close">x</button>
         </div>
-
+        {/* eslint-disable-next-line */}
       <div
   className="auth-modal-tabs"
   id="sec"
@@ -140,15 +140,17 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
     background: tab === 'login'
       ? 'linear-gradient(to right, #03387d 50%, #022227 50%)'
       : 'linear-gradient(to left, #03387d 50%, #022227 50%)'
-  }}
+  } as any}
 >
-  <button id='ftbtn'
+  <button 
+    id='ftbtn-login'
     className={`auth-modal-tab ${tab === 'login' ? 'auth-modal-tab-active' : 'auth-modal-tab-inactive'}`}
     onClick={() => setTab('login')}
   >
     Entrar
   </button>
-  <button id='ftbtn'
+  <button 
+    id='ftbtn-register'
     className={`auth-modal-tab ${tab === 'register' ? 'auth-modal-tab-active' : 'auth-modal-tab-inactive'}`}
     onClick={() => setTab('register')}
   >
@@ -164,7 +166,8 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
                <label typeof="input" className="text">Email:</label>
             <input
               type="email"
-         
+              placeholder="seu@email.com"
+              aria-label="Email"
               required
               className="auth-modal-input"
               value={email}
@@ -175,7 +178,8 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
                <label typeof="input" className="text">Senha:</label>
             <input
               type="password"
-             
+              placeholder="sua senha segura"
+              aria-label="Senha"
               required
               className="auth-modal-input"
               value={password}
@@ -194,9 +198,10 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
            <div className='ett' id='et1'>
              <label typeof="input" className="text">Name:</label>
             <input
-           name="input" 
+           name="fullname"
               type="text"
-        
+              placeholder="seu nome completo"
+              aria-label="Nome completo"
               required
               className="auth-modal-input"
               value={name}
@@ -204,9 +209,9 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
             /> </div>
             <div className="space-y-2" id='arq'>
               <input
-        
                 type="file"
                 accept="image/*"
+                aria-label="Enviar foto de perfil"
                 className="auth-modal-file"
                 onChange={(e) => handleAvatarFile(e.target.files?.[0])}
               />
@@ -220,9 +225,9 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
              <div className='ett' id='et2'>
                <label typeof="input" className="text">Email:</label>
             <input
-      
               type="email"
-           
+              placeholder="seu@email.com"
+              aria-label="Email"
               required
               className="auth-modal-input"
               value={email}
@@ -232,9 +237,9 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
              <div className='ett' id='et3'>
                <label typeof="input" className="text">Senha:</label>
             <input
-       
               type="password"
-             
+              placeholder="senha (mín 6 caracteres)"
+              aria-label="Senha"
               required
               className="auth-modal-input"
               value={password}
@@ -244,9 +249,9 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
              <div className='ett' id='et4'>
                <label typeof="input" className="text">Confirme a senha:</label>
             <input
-           
               type="password"
-           
+              placeholder="confirme sua senha"
+              aria-label="Confirmar senha"
               required
               className="auth-modal-input"
               value={confirmPassword}
