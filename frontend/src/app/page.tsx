@@ -59,7 +59,23 @@ export default function Home() {
         ? (data as any).results
         : [];
       setAllGames(safeData);
-      // page is updated automatically by filtering effect below
+      // compute visible games right away in case effect hasn't run yet
+      let initialFiltered = safeData;
+      if (filters.searchTerm) {
+        const term = filters.searchTerm.toLowerCase();
+        initialFiltered = initialFiltered.filter((g) =>
+          g.title.toLowerCase().includes(term)
+        );
+      }
+      if (filters.genre) {
+        const genreVal = filters.genre.toLowerCase();
+        initialFiltered = initialFiltered.filter((g) =>
+          Array.isArray(g.genres) &&
+          g.genres.some((gn) => gn.toLowerCase().includes(genreVal))
+        );
+      }
+      const visibleCount = Math.min(initialFiltered.length, pageToLoad * PAGE_SIZE);
+      setGames(initialFiltered.slice(0, visibleCount));
       setPage(pageToLoad);
     } catch {
       if (isInitial) setGames([]);
