@@ -72,11 +72,12 @@ export default function SettingsPage() {
   const handleSaveAvatar = async () => {
     setIsSavingAvatar(true);
     try {
-      const updated = await api.post<{ id: string; name: string; email: string; avatar?: string; createdAt?: string }>(
-        '/users/avatar',
-        { avatar: avatar || null },
+      await api.post('/users/avatar', { avatar: avatar || null });
+      const refreshed = await api.get<{ id: string; name: string; email: string; avatar?: string; createdAt?: string }>(
+        '/users/me',
       );
-      updateUser(updated);
+      updateUser(refreshed);
+      setAvatar(refreshed.avatar || '');
       toast.success('Foto atualizada com sucesso');
     } catch {
       toast.error('Erro ao atualizar foto');

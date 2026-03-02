@@ -21,6 +21,13 @@ export class UsersService {
     });
   }
 
+  async findById(userId: number) {
+    return this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { id: true, name: true, email: true, avatar: true, createdAt: true },
+    });
+  }
+
   async listUsers() {
     return this.prisma.user.findMany({
       select: {

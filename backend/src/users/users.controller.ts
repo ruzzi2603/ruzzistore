@@ -1,10 +1,17 @@
-import { Controller, Post, Body, Req, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Req, UseGuards, Get } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
+
+  @UseGuards(JwtAuthGuard)
+  @Get('me')
+  me(@Req() req: any) {
+    const userId = Number(req.user.userId);
+    return this.usersService.findById(userId);
+  }
 
   @UseGuards(JwtAuthGuard)
   @Post('update')
@@ -20,5 +27,4 @@ export class UsersController {
     const avatar = body.avatar && body.avatar.trim().length > 0 ? body.avatar : null;
     return this.usersService.updateAvatar(userId, avatar);
   }
-
 }
