@@ -97,27 +97,32 @@ export default function GameDetailsPage() {
         if (!active) return;
 
         if (localRes?.ok) {
-          const localData = await localRes.json();
+          const text = await localRes.text();
+          const localData = text ? JSON.parse(text) : null;
           setLocalGame(localData || null);
         }
 
         if (detailsRes?.ok) {
-          const rawgData = await detailsRes.json();
+          const text = await detailsRes.text();
+          const rawgData = text ? JSON.parse(text) : null;
           setDetails(rawgData || null);
         }
 
         if (moviesRes?.ok) {
-          const moviesData: RawgMovies = await moviesRes.json();
+          const text = await moviesRes.text();
+          const moviesData: RawgMovies | null = text ? JSON.parse(text) : null;
           setMovies(Array.isArray(moviesData?.results) ? moviesData.results : []);
         }
 
         if (ytRes?.ok) {
-          const ytData: RawgYoutube = await ytRes.json();
+          const text = await ytRes.text();
+          const ytData: RawgYoutube | null = text ? JSON.parse(text) : null;
           setYoutube(Array.isArray(ytData?.results) ? ytData.results : []);
         }
 
         if (twitchRes?.ok) {
-          const twitchData: RawgTwitch = await twitchRes.json();
+          const text = await twitchRes.text();
+          const twitchData: RawgTwitch | null = text ? JSON.parse(text) : null;
           setTwitch(Array.isArray(twitchData?.results) ? twitchData.results : []);
         }
       } finally {
@@ -188,17 +193,7 @@ export default function GameDetailsPage() {
             <ArrowLeft size={18} />
             Voltar para Dashboard
           </Link>
-          {display.externalUrl && (
-            <a
-              href={display.externalUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-300 text-slate-900 font-semibold hover:bg-cyan-200 transition-colors"
-            >
-              Abrir pagina oficial
-              <ExternalLink size={16} />
-            </a>
-          )}
+     
         </div>
 
         <section className="relative overflow-hidden rounded-3xl border border-white/10 bg-slate-950/50">
@@ -229,6 +224,18 @@ export default function GameDetailsPage() {
                 </span>
               )}
             </div>
+                 {display.externalUrl && (
+            <a
+            id='btnRW'
+              href={display.externalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-300 text-slate-900 font-semibold hover:bg-cyan-200 transition-colors"
+            >
+              Abrir pagina oficial
+              <ExternalLink size={16} />
+            </a>
+          )}
           </div>
         </section>
 
@@ -244,3 +251,5 @@ export default function GameDetailsPage() {
     </div>
   );
 }
+
+

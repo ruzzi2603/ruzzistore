@@ -115,10 +115,9 @@ export default function GameFilters({
 
       {/* Filter Toggle */}
       <button
-        type="button"
+      type="button"
         onClick={() => setShowFilters((prev) => !prev)}
-        className="flex items-center gap-2 text-sm font-semibold text-cyan-300 hover:text-cyan-200 transition-colors"
-        aria-expanded={showFilters}
+        className="flex items-center gap-2 text-sm font-semibold text-slate-300 hover:text-slate-100 transition-colors focus:outline-none"
         aria-controls="filters-panel"
       >
         <ChevronDown

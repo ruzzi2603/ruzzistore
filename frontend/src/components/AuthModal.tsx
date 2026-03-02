@@ -218,7 +218,7 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
               </div>
 
               <div className="flex justify-end">
-                <button type="submit" disabled={loading} className="auth-modal-submit px-6 py-2">
+                <button type="submit" disabled={loading} className="auth-modal-submit px-6 py-2" id='btnCR'>
                   {loading ? <Loader /> : 'Entrar'}
                 </button>
               </div>
@@ -244,7 +244,7 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
                 />
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-2" id='ft'>
                 <input
                   type="file"
                   accept="image/*"
@@ -329,7 +329,7 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
               </div>
 
               <div className="flex justify-end">
-                <button type="submit" disabled={loading} className="auth-modal-submit px-6 py-2">
+                <button type="submit" disabled={loading} className="auth-modal-submit px-6 py-2" id='btnCR'>
                   {loading ? <Loader /> : 'Criar conta'}
                 </button>
               </div>

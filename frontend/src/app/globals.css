@@ -937,4 +937,43 @@ top: 12%;
     scroll-behavior: auto !important;
   }
 }
-/* Auth Modal styles cleanup - old duplicate styles removed */
+#btnRW {
+  background-color: #055bf0;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  width: fit-content;
+  font-weight: bold;
+  transition: background-color 0.9s ease;
+}
+#btnRW:hover {
+ background-color: #03387d;
+}
+#ft{
+  background-color: #1e70dc;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  width: fit-content;
+  font-weight: bold;
+  transition: background-color 0.9s ease;
+}
+#ft:hover {
+ background-color: #03387d;
+}
+.text-sm{
+  color: rgb(108, 145, 220);
+  margin: 10px;
+  margin-left: 0px;
+}
+#btnCR{
+  background-color: #055bf0;
+  border-radius: 15px;
+  margin-top: 10px;
+  }
+#btnCR:hover{
+  background-color: #3e81f4;
+  
+}
