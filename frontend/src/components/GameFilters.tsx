@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { useState, useCallback } from 'react';
-import { Search, ChevronDown, X } from 'lucide-react';
+import { useState, useCallback } from "react";
+import { Search, ChevronDown, X } from "lucide-react";
 
 interface FilterOptions {
   searchTerm: string;
   genre: string; // stored value in english
-  priceRange: 'all' | 'free' | 'bajo' | 'medio' | 'alto';
+  priceRange: "all" | "free" | "bajo" | "medio" | "alto";
   platform: string;
-  sortBy: 'relevance' | 'newest' | 'priceAsc' | 'priceDesc' | 'rating';
+  sortBy: "relevance" | "newest" | "priceAsc" | "priceDesc" | "rating";
 }
 
 interface GameFiltersProps {
@@ -17,50 +17,53 @@ interface GameFiltersProps {
 }
 
 const genres = [
-  { value: '', label: 'Todos' },
-  { value: 'action', label: 'Ação' },
-  { value: 'adventure', label: 'Aventura' },
-  { value: 'role-playing', label: 'RPG' },
-  { value: 'strategy', label: 'Estratégia' },
-  { value: 'simulation', label: 'Simulação' },
-  { value: 'sports', label: 'Esporte' },
-  { value: 'puzzle', label: 'Puzzle' },
-  { value: 'shooter', label: 'Shooter' },
+  { value: "", label: "Todos" },
+  { value: "action", label: "Ação" },
+  { value: "adventure", label: "Aventura" },
+  { value: "role-playing", label: "RPG" },
+  { value: "strategy", label: "Estratégia" },
+  { value: "simulation", label: "Simulação" },
+  { value: "sports", label: "Esporte" },
+  { value: "puzzle", label: "Puzzle" },
+  { value: "shooter", label: "Shooter" },
 ];
 
 const platforms = [
-  'Todos',
-  'PC',
-  'Steam',
-  'Epic Games',
-  'GOG',
-  'Amazon Prime Gaming',
+  "Todos",
+  "PC",
+  "Steam",
+  "Epic Games",
+  "GOG",
+  "Amazon Prime Gaming",
 ];
 
 const priceRanges = [
-  { key: 'all', label: 'Todos os preços' },
-  { key: 'free', label: 'Grátis' },
-  { key: 'bajo', label: 'Até R$ 50' },
-  { key: 'medio', label: 'R$ 50 - R$ 150' },
-  { key: 'alto', label: 'Acima de R$ 150' },
+  { key: "all", label: "Todos os preços" },
+  { key: "free", label: "Grátis" },
+  { key: "bajo", label: "Até R$ 50" },
+  { key: "medio", label: "R$ 50 - R$ 150" },
+  { key: "alto", label: "Acima de R$ 150" },
 ];
 
 const sortOptions = [
-  { key: 'relevance', label: 'Relevância' },
-  { key: 'newest', label: 'Mais recentes' },
-  { key: 'priceAsc', label: 'Menor preço' },
-  { key: 'priceDesc', label: 'Maior preço' },
-  { key: 'rating', label: 'Melhor avaliação' },
+  { key: "relevance", label: "Relevância" },
+  { key: "newest", label: "Mais recentes" },
+  { key: "priceAsc", label: "Menor preço" },
+  { key: "priceDesc", label: "Maior preço" },
+  { key: "rating", label: "Melhor avaliação" },
 ];
 
-export default function GameFilters({ onFiltersChange, isOpen = false }: GameFiltersProps) {
-  const [showFilters, setShowFilters] = useState(isOpen);
+export default function GameFilters({
+  onFiltersChange,
+  isOpen = false,
+}: GameFiltersProps) {
+  const [showFilters, setShowFilters] = useState<boolean>(!!isOpen);
   const [filters, setFilters] = useState<FilterOptions>({
-    searchTerm: '',
-    genre: '',
-    priceRange: 'all',
-    platform: 'Todos',
-    sortBy: 'relevance',
+    searchTerm: "",
+    genre: "",
+    priceRange: "all",
+    platform: "Todos",
+    sortBy: "relevance",
   });
 
   const handleFilterChange = useCallback(
@@ -69,27 +72,27 @@ export default function GameFilters({ onFiltersChange, isOpen = false }: GameFil
       setFilters(updated);
       onFiltersChange(updated);
     },
-    [filters, onFiltersChange]
+    [filters, onFiltersChange],
   );
 
   const handleReset = () => {
     const defaultFilters: FilterOptions = {
-      searchTerm: '',
-      genre: '',
-      priceRange: 'all',
-      platform: 'Todos',
-      sortBy: 'relevance',
+      searchTerm: "",
+      genre: "",
+      priceRange: "all",
+      platform: "Todos",
+      sortBy: "relevance",
     };
     setFilters(defaultFilters);
     onFiltersChange(defaultFilters);
   };
 
   const isFiltered =
-    filters.genre !== '' ||
-    filters.priceRange !== 'all' ||
-    filters.platform !== 'Todos' ||
-    filters.sortBy !== 'relevance' ||
-    filters.searchTerm !== '';
+    filters.genre !== "" ||
+    filters.priceRange !== "all" ||
+    filters.platform !== "Todos" ||
+    filters.sortBy !== "relevance" ||
+    filters.searchTerm !== "";
 
   return (
     <div className="w-full space-y-4">
@@ -112,18 +115,23 @@ export default function GameFilters({ onFiltersChange, isOpen = false }: GameFil
 
       {/* Filter Toggle */}
       <button
-        onClick={() => setShowFilters(!showFilters)}
+        type="button"
+        onClick={() => setShowFilters((prev) => !prev)}
         className="flex items-center gap-2 text-sm font-semibold text-cyan-300 hover:text-cyan-200 transition-colors"
-        aria-expanded={showFilters ? 'true' : 'false'}
+        aria-expanded={showFilters}
         aria-controls="filters-panel"
       >
         <ChevronDown
           size={16}
-          className={`transition-transform ${showFilters ? 'rotate-180' : ''}`}
+          className={`transition-transform ${showFilters ? "rotate-180" : ""}`}
           aria-hidden="true"
         />
-        {showFilters ? 'Ocultar filtros' : 'Mostrar filtros'}
-        {isFiltered && <span className="text-xs bg-cyan-400/20 px-2 py-1 rounded">Ativo</span>}
+        {showFilters ? "Ocultar filtros" : "Mostrar filtros"}
+        {isFiltered && (
+          <span className="text-xs bg-cyan-400/20 px-2 py-1 rounded">
+            Ativo
+          </span>
+        )}
       </button>
 
       {/* Filters Panel */}
@@ -136,7 +144,10 @@ export default function GameFilters({ onFiltersChange, isOpen = false }: GameFil
         >
           {/* Genre Filter */}
           <div>
-            <label htmlFor="genre-select" className="block text-sm font-semibold mb-2 text-slate-200">
+            <label
+              htmlFor="genre-select"
+              className="block text-sm font-semibold mb-2 text-slate-200"
+            >
               Gênero
             </label>
             <select
@@ -155,7 +166,10 @@ export default function GameFilters({ onFiltersChange, isOpen = false }: GameFil
 
           {/* Platform Filter */}
           <div>
-            <label htmlFor="platform-select" className="block text-sm font-semibold mb-2 text-slate-200">
+            <label
+              htmlFor="platform-select"
+              className="block text-sm font-semibold mb-2 text-slate-200"
+            >
               Plataforma
             </label>
             <select
@@ -174,13 +188,20 @@ export default function GameFilters({ onFiltersChange, isOpen = false }: GameFil
 
           {/* Price Range Filter */}
           <div>
-            <label htmlFor="price-select" className="block text-sm font-semibold mb-2 text-slate-200">
+            <label
+              htmlFor="price-select"
+              className="block text-sm font-semibold mb-2 text-slate-200"
+            >
               Faixa de Preço
             </label>
             <select
               id="price-select"
               value={filters.priceRange}
-              onChange={(e) => handleFilterChange({ priceRange: e.target.value as typeof filters.priceRange })}
+              onChange={(e) =>
+                handleFilterChange({
+                  priceRange: e.target.value as typeof filters.priceRange,
+                })
+              }
               className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white focus:outline-none focus:border-cyan-400"
             >
               {priceRanges.map((range) => (
@@ -193,13 +214,20 @@ export default function GameFilters({ onFiltersChange, isOpen = false }: GameFil
 
           {/* Sort */}
           <div>
-            <label htmlFor="sort-select" className="block text-sm font-semibold mb-2 text-slate-200">
+            <label
+              htmlFor="sort-select"
+              className="block text-sm font-semibold mb-2 text-slate-200"
+            >
               Ordenar por
             </label>
             <select
               id="sort-select"
               value={filters.sortBy}
-              onChange={(e) => handleFilterChange({ sortBy: e.target.value as typeof filters.sortBy })}
+              onChange={(e) =>
+                handleFilterChange({
+                  sortBy: e.target.value as typeof filters.sortBy,
+                })
+              }
               className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white focus:outline-none focus:border-cyan-400"
             >
               {sortOptions.map((option) => (
