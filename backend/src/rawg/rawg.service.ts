@@ -1,16 +1,37 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
+import { ConfigService } from '@nestjs/config';
 import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class RawgService {
-  private readonly baseUrl = process.env.RAWG_BASE_URL || 'https://api.rawg.io/api';
-  private readonly apiKey = process.env.RAWG_API_KEY;
+  private readonly baseUrl: string;
+  private readonly apiKey: string | undefined;
 
-  constructor(private readonly http: HttpService) {}
+  constructor(
+    private readonly http: HttpService,
+    private readonly config: ConfigService,
+  ) {
+    this.baseUrl = this.config.get<string>('RAWG_BASE_URL') || 'https://api.rawg.io/api';
+    this.apiKey = this.config.get<string>('RAWG_API_KEY')?.trim();
+
+    if (!this.apiKey) {
+      // eslint-disable-next-line no-console
+      console.warn('RAWG_API_KEY not set');
+    } else {
+      // eslint-disable-next-line no-console
+      console.log('RAWG config loaded:', {
+        baseUrl: this.baseUrl,
+        keyLength: this.apiKey.length,
+      });
+    }
+  }
 
   async getGames(page = 1, pageSize = 100, ordering?: string) {
     try {
+      if (!this.apiKey) {
+        throw new Error('RAWG_API_KEY not set');
+      }
       const response = await firstValueFrom(
         this.http.get(`${this.baseUrl}/games`, {
           params: {
@@ -51,6 +72,9 @@ export class RawgService {
 
   private async fetchRawg(path: string) {
     try {
+      if (!this.apiKey) {
+        throw new Error('RAWG_API_KEY not set');
+      }
       const response = await firstValueFrom(
         this.http.get(`${this.baseUrl}${path}`, {
           params: {

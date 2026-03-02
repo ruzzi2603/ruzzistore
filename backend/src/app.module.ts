@@ -24,6 +24,7 @@ import { ScraperModule } from './scraper/scraper.module';
     // Variaveis de ambiente (.env)
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: ['backend/.env', '.env'],
     }),
 
     // Banco de dados
@@ -46,3 +47,4 @@ import { ScraperModule } from './scraper/scraper.module';
   ],
 })
 export class AppModule {}
+

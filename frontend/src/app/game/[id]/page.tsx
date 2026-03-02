@@ -245,7 +245,6 @@ export default function GameDetailsPage() {
           genres={display.genres}
           releases={display.released ?? undefined}
           rating={display.rating ?? undefined}
-          trailers={movies}
         />
       </div>
     </div>
