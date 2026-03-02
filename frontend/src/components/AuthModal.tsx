@@ -340,5 +340,7 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
     </div>
   );
 
-  return createPortal(modal, typeof document !== 'undefined' ? document.body : null);
+ if (typeof document === 'undefined' || !document.body) return null;
+return createPortal(modal, document.body);
+
 }
