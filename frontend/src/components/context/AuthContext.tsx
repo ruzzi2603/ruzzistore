@@ -38,6 +38,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const storagedUser = localStorage.getItem('@RuzziStore:user');
 
       if (token && storagedUser) {
+        setCookie(undefined, 'ruzzistore.token', token, {
+          maxAge: 60 * 60 * 24 * 7,
+          path: '/',
+          sameSite: 'lax',
+          secure: process.env.NODE_ENV === 'production',
+        });
         setUser(JSON.parse(storagedUser));
         await fetchFavorites();
       }
@@ -102,3 +108,4 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 }
 
 export const useAuth = () => useContext(AuthContext);
+
