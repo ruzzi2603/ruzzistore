@@ -111,7 +111,7 @@ export default function RootLayout({
         <AuthProvider>
           <div className="relative flex min-h-screen flex-col">
             <Navbar />
-            <main className="flex-1 w-full" id="main">{children}</main>
+            <main className="flex-1 w-full pt-16" id="main">{children}</main>
 
             <footer
               className="border-t border-white/5 py-8 mt-auto var(--surface)/50"
@@ -201,3 +201,4 @@ export default function RootLayout({
     </html>
   );
 }
+

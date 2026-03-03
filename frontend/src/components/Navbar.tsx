@@ -15,49 +15,55 @@ export default function Navbar() {
   const { user } = useAuth();
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentY =
-        window.scrollY ||
-        document.documentElement.scrollTop ||
-        document.body.scrollTop ||
-        0;
-      const lastY = lastScrollYRef.current;
+    let ticking = false;
 
-      if (currentY < 10) {
+    const updateByScroll = () => {
+      const currentY = Math.max(window.scrollY || 0, 0);
+      const lastY = lastScrollYRef.current;
+      const delta = currentY - lastY;
+
+      if (currentY <= 0) {
         setIsVisible(true);
-      } else if (currentY < lastY) {
-        // Subiu a tela, mesmo pouco: navbar reaparece.
-        setIsVisible(true);
-      } else if (currentY > lastY) {
-        // Desceu a tela: navbar some.
+      } else if (delta > 0) {
         setIsVisible(false);
+      } else if (delta < 0) {
+        setIsVisible(true);
       }
 
       lastScrollYRef.current = currentY;
+      ticking = false;
     };
 
-    handleScroll();
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(updateByScroll);
+    };
+
+    lastScrollYRef.current = Math.max(window.scrollY || 0, 0);
     window.addEventListener('scroll', handleScroll, { passive: true });
-    document.addEventListener('scroll', handleScroll, { passive: true, capture: true });
+    window.addEventListener('touchmove', handleScroll, { passive: true });
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      document.removeEventListener('scroll', handleScroll, true);
+      window.removeEventListener('touchmove', handleScroll);
     };
   }, []);
 
   const isActive = (path: string) => pathname === path;
 
   return (
-    <nav className={`navbar ${isVisible ? 'translate-y-0' : '-translate-y-full'}`} aria-label="NavegaÃ§Ã£o principal">
+    <nav className={`navbar ${isVisible ? 'translate-y-0' : '-translate-y-full'}`} aria-label="Navegação principal">
       <div className="navbar-inner">
-        <div id='title'>
-        <Link href="/" className="navbar-brand" aria-label="RuzziStore - Home">
-          <span className="navbar-brand-text">
-            RUZZI<span className="navbar-brand-accent">STORE</span>
-          </span>
-        </Link>
-</div>
-        <div className="navbar-links" role="navigation" aria-label="Menu de navegaÃ§Ã£o">
+        <div id="title">
+          <Link href="/" className="navbar-brand" aria-label="RuzziStore - Home">
+            <span className="navbar-brand-text">
+              RUZZI<span className="navbar-brand-accent">STORE</span>
+            </span>
+          </Link>
+        </div>
+
+        <div className="navbar-links" role="navigation" aria-label="Menu de navegação">
           <Link
             href="/dashboard"
             className={`navbar-link ${isActive('/dashboard') ? 'navbar-link-active' : 'navbar-link-inactive'}`}
