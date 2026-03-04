@@ -53,7 +53,7 @@ export default function Navbar() {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <nav className={`navbar ${isVisible ? 'translate-y-0' : '-translate-y-full'}`} aria-label="Navegação principal">
+    <nav className={`navbar ${isVisible ? 'translate-y-0' : '-translate-y-full'}`} aria-label="Navegaï¿½ï¿½o principal">
       <div className="navbar-inner">
         <div id="title">
           <Link href="/" className="navbar-brand" aria-label="RuzziStore - Home">
@@ -63,7 +63,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        <div className="navbar-links" role="navigation" aria-label="Menu de navegação">
+        <div className="navbar-links" role="navigation" aria-label="Menu de navegaï¿½ï¿½o">
           <Link
             href="/dashboard"
             className={`navbar-link ${isActive('/dashboard') ? 'navbar-link-active' : 'navbar-link-inactive'}`}
