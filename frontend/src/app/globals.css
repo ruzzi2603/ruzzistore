@@ -2,13 +2,13 @@
 @import "tailwindcss/preflight";
 @import "tailwindcss/utilities";
 :root {
-  --background: #000147;
+  --background: #000000;
   --foreground: #f1f5f9;
   --surface: #0f1720;
   --surface-2: #121a24;
   --muted: #94a3b8;
-  --accent: #22d3ee;
-  --accent-2: #60a5fa;
+  --accent: #22d3ee79;
+  --accent-2: #60a5fa88;
   --border: #1f2a37;
 }
 * {
@@ -38,17 +38,17 @@ body::before {
   background:
     radial-gradient(
       60% 40% at 15% 10%,
-      rgba(0, 221, 255, 0.195),
+      rgba(0, 221, 255, 0.173),
       transparent 60%
     ),
     radial-gradient(
       50% 40% at 85% 0%,
-      rgba(7, 36, 255, 0.253),
+      rgba(7, 36, 255, 0.181),
       transparent 60%
     ),
     radial-gradient(
       50% 40% at 50% 100%,
-      rgba(16, 176, 245, 0.285),
+      rgba(16, 176, 245, 0.17),
       transparent 60%
     );
   z-index: -1;
@@ -86,7 +86,9 @@ body::before {
 .cls-1 {
   fill: #000000;
 }
-
+#title{
+  margin-left: 3%;
+}
 .title {
   font-size: 185%;
   font-weight: 600;
@@ -753,7 +755,14 @@ color: rgb(6, 1, 55);
 }
 #princ {
   height: 85vh;
+  margin-left: 3%;
   align-content: center;
+}
+.filt{
+  margin-top: 0%;
+  background-color: #00000000;
+  height: 100vh;
+  width: 100%;
 }
 #dvtn {
   margin-bottom: 5%;
@@ -839,8 +848,11 @@ color: rgb(6, 1, 55);
   width: 90%;
   z-index: 1;
   position: absolute;
+  --width: 250px;
+  --height: 300px;
+  --quantity: 9;
   height: var(--height);
-top: 12%;
+  top: 12%;
   bottom: 74%;
   -webkit-mask-image: linear-gradient(
     to right,
@@ -867,13 +879,22 @@ top: 12%;
   width: var(--width);
   height: var(--height);
   position: absolute;
-
   animation: autoRun 30s linear infinite;
   transition: filter 0.5s;
   animation-delay: calc(
     (30s / var(--quantity)) * (var(--position) - 1) - 30s
   ) !important;
 }
+.slider .list .item.item-pos-1 { --position: 1; }
+.slider .list .item.item-pos-2 { --position: 2; }
+.slider .list .item.item-pos-3 { --position: 3; }
+.slider .list .item.item-pos-4 { --position: 4; }
+.slider .list .item.item-pos-5 { --position: 5; }
+.slider .list .item.item-pos-6 { --position: 6; }
+.slider .list .item.item-pos-7 { --position: 7; }
+.slider .list .item.item-pos-8 { --position: 8; }
+.slider .list .item.item-pos-9 { --position: 9; }
+
 .slider .list .item img {
   width: 100%;
 }
@@ -979,4 +1000,23 @@ top: 12%;
   background-color: #3e81f4;
   
 }
+#pesquisa{
+  width: 30%;
+ margin-left: 8%;
+  background-color: #00153ef5;
+  color: white;
+}
+#lupa{
+
+ margin-left: 8%;
+
+border-radius: 3px 3px 3px 3px;
+color: rgb(0, 242, 255);
+}
+#filter{
+  margin-left: 8%;
+  color: white;
+}
+
+
 

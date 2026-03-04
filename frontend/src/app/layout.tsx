@@ -6,7 +6,7 @@ import { AuthProvider } from "@/components/context/AuthContext";
 import Navbar from "@/components/Navbar";
 import SchemaOrg from "@/components/SchemaOrg";
 import Image from "next/image";
-import logo from "@/img/logo.jpg";
+
 
 const inter = Inter({
   subsets: ["latin"],
@@ -118,15 +118,7 @@ export default function RootLayout({
               id="footer"
             >
               <div className="max-w-7xl mx-auto px-4 text-center" id="footcnt">
-                <div className="flex justify-center mb-4">
-                  <Image
-                    src={logo}
-                    alt="RuzziStore"
-                    width={120}
-                    height={120}
-                    id="imgLgF"
-                  />
-                </div>
+              
                 <p className="text-sm var(--muted)">
                   &copy; {new Date().getFullYear()}{" "}
                   <span className="text-cyan-300 font-semibold">

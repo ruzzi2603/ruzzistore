@@ -1,11 +1,12 @@
-"use client";
+﻿"use client";
 
-import { useState, useCallback } from "react";
-import { Search, ChevronDown, X } from "lucide-react";
+import Image from "next/image";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useMemo, useRef, useState } from "react";
 
 interface FilterOptions {
   searchTerm: string;
-  genre: string; // stored value in english
+  genre: string;
   priceRange: "all" | "free" | "bajo" | "medio" | "alto";
   platform: string;
   sortBy: "relevance" | "newest" | "priceAsc" | "priceDesc" | "rating";
@@ -13,243 +14,127 @@ interface FilterOptions {
 
 interface GameFiltersProps {
   onFiltersChange: (filters: FilterOptions) => void;
-  isOpen?: boolean;
 }
 
-const genres = [
-  { value: "", label: "Todos" },
-  { value: "action", label: "Ação" },
-  { value: "adventure", label: "Aventura" },
-  { value: "role-playing", label: "RPG" },
-  { value: "strategy", label: "Estratégia" },
-  { value: "simulation", label: "Simulação" },
-  { value: "sports", label: "Esporte" },
-  { value: "puzzle", label: "Puzzle" },
-  { value: "shooter", label: "Shooter" },
+type CategoryItem = {
+  value: string;
+  label: string;
+  image: string;
+};
+
+const categoryItems: CategoryItem[] = [
+  { value: "", label: "Todos", image: "/img/img9.webp" },
+  { value: "action", label: "Ação", image: "/img/img.webp" },
+  { value: "adventure", label: "Aventura", image: "/img/img2.webp" },
+  { value: "role-playing", label: "RPG", image: "/img/img3.webp" },
+  { value: "strategy", label: "Estratégia", image: "/img/img4.webp" },
+  { value: "simulation", label: "Simulação", image: "/img/img5.webp" },
+  { value: "sports", label: "Esportes", image: "/img/img6.webp" },
+  { value: "puzzle", label: "Quebra-cabeça", image: "/img/img7.avif" },
+  { value: "shooter", label: "Shooter", image: "/img/img8.webp" },
 ];
 
-const platforms = [
-  "Todos",
-  "PC",
-  "Steam",
-  "Epic Games",
-  "GOG",
-  "Amazon Prime Gaming",
-];
+const defaultFilters: FilterOptions = {
+  searchTerm: "",
+  genre: "",
+  priceRange: "all",
+  platform: "Todos",
+  sortBy: "relevance",
+};
 
-const priceRanges = [
-  { key: "all", label: "Todos os preços" },
-  { key: "free", label: "Grátis" },
-  { key: "bajo", label: "Até R$ 50" },
-  { key: "medio", label: "R$ 50 - R$ 150" },
-  { key: "alto", label: "Acima de R$ 150" },
-];
+export default function GameFilters({ onFiltersChange }: GameFiltersProps) {
+  const [selectedGenre, setSelectedGenre] = useState<string>(defaultFilters.genre);
+  const trackRef = useRef<HTMLDivElement>(null);
 
-const sortOptions = [
-  { key: "relevance", label: "Relevância" },
-  { key: "newest", label: "Mais recentes" },
-  { key: "priceAsc", label: "Menor preço" },
-  { key: "priceDesc", label: "Maior preço" },
-  { key: "rating", label: "Melhor avaliação" },
-];
+  const canScroll = useMemo(() => categoryItems.length > 4, []);
 
-export default function GameFilters({
-  onFiltersChange,
-  isOpen = false,
-}: GameFiltersProps) {
-  const [showFilters, setShowFilters] = useState<boolean>(!!isOpen);
-  const [filters, setFilters] = useState<FilterOptions>({
-    searchTerm: "",
-    genre: "",
-    priceRange: "all",
-    platform: "Todos",
-    sortBy: "relevance",
-  });
-
-  const handleFilterChange = useCallback(
-    (newFilters: Partial<FilterOptions>) => {
-      const updated = { ...filters, ...newFilters };
-      setFilters(updated);
-      onFiltersChange(updated);
-    },
-    [filters, onFiltersChange],
-  );
-
-  const handleReset = () => {
-    const defaultFilters: FilterOptions = {
-      searchTerm: "",
-      genre: "",
-      priceRange: "all",
-      platform: "Todos",
-      sortBy: "relevance",
-    };
-    setFilters(defaultFilters);
-    onFiltersChange(defaultFilters);
+  const applyCategory = (genre: string) => {
+    setSelectedGenre(genre);
+    onFiltersChange({ ...defaultFilters, genre });
   };
 
-  const isFiltered =
-    filters.genre !== "" ||
-    filters.priceRange !== "all" ||
-    filters.platform !== "Todos" ||
-    filters.sortBy !== "relevance" ||
-    filters.searchTerm !== "";
+  const scrollTrack = (direction: "left" | "right") => {
+    const node = trackRef.current;
+    if (!node) return;
+    const amount = Math.max(node.clientWidth * 0.8, 260);
+    node.scrollBy({
+      left: direction === "right" ? amount : -amount,
+      behavior: "smooth",
+    });
+  };
 
   return (
-    <div className="w-full space-y-4">
-      {/* Search Bar */}
-      <div className="relative">
-        <Search
-          size={20}
-          className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"
-          aria-hidden="true"
-        />
-        <input
-          type="text"
-          placeholder="Buscar jogos por nome..."
-          value={filters.searchTerm}
-          onChange={(e) => handleFilterChange({ searchTerm: e.target.value })}
-          className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-slate-800 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400"
-          aria-label="Buscar jogos"
-        />
+    <section className="relative" aria-label="Explorar por categoria">
+      <div className="mb-4">
+        <h3 className="text-xs sm:text-sm tracking-widest uppercase text-slate-300 font-semibold">
+          Explore por categoria
+        </h3>
       </div>
 
-      {/* Filter Toggle */}
-      <button
-      type="button"
-        onClick={() => setShowFilters((prev) => !prev)}
-        className="flex items-center gap-2 text-sm font-semibold text-slate-300 hover:text-slate-100 transition-colors focus:outline-none"
-        aria-controls="filters-panel"
-      >
-        <ChevronDown
-          size={16}
-          className={`transition-transform ${showFilters ? "rotate-180" : ""}`}
-          aria-hidden="true"
-        />
-        {showFilters ? "Ocultar filtros" : "Mostrar filtros"}
-        {isFiltered && (
-          <span className="text-xs bg-cyan-400/20 px-2 py-1 rounded">
-            Ativo
-          </span>
-        )}
-      </button>
-
-      {/* Filters Panel */}
-      {showFilters && (
+      <div className="relative">
         <div
-          id="filters-panel"
-          className="space-y-4 p-4 rounded-lg bg-slate-800/50 border border-slate-700"
-          role="region"
-          aria-label="Painel de filtros"
+          ref={trackRef}
+          className="no-scrollbar flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2"
+          role="group"
+          aria-label="Lista de categorias"
         >
-          {/* Genre Filter */}
-          <div>
-            <label
-              htmlFor="genre-select"
-              className="block text-sm font-semibold mb-2 text-slate-200"
-            >
-              Gênero
-            </label>
-            <select
-              id="genre-select"
-              value={filters.genre}
-              onChange={(e) => handleFilterChange({ genre: e.target.value })}
-              className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white focus:outline-none focus:border-cyan-400"
-            >
-              {genres.map((g) => (
-                <option key={g.value} value={g.value}>
-                  {g.label}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Platform Filter */}
-          <div>
-            <label
-              htmlFor="platform-select"
-              className="block text-sm font-semibold mb-2 text-slate-200"
-            >
-              Plataforma
-            </label>
-            <select
-              id="platform-select"
-              value={filters.platform}
-              onChange={(e) => handleFilterChange({ platform: e.target.value })}
-              className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white focus:outline-none focus:border-cyan-400"
-            >
-              {platforms.map((platform) => (
-                <option key={platform} value={platform}>
-                  {platform}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Price Range Filter */}
-          <div>
-            <label
-              htmlFor="price-select"
-              className="block text-sm font-semibold mb-2 text-slate-200"
-            >
-              Faixa de Preço
-            </label>
-            <select
-              id="price-select"
-              value={filters.priceRange}
-              onChange={(e) =>
-                handleFilterChange({
-                  priceRange: e.target.value as typeof filters.priceRange,
-                })
-              }
-              className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white focus:outline-none focus:border-cyan-400"
-            >
-              {priceRanges.map((range) => (
-                <option key={range.key} value={range.key}>
-                  {range.label}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Sort */}
-          <div>
-            <label
-              htmlFor="sort-select"
-              className="block text-sm font-semibold mb-2 text-slate-200"
-            >
-              Ordenar por
-            </label>
-            <select
-              id="sort-select"
-              value={filters.sortBy}
-              onChange={(e) =>
-                handleFilterChange({
-                  sortBy: e.target.value as typeof filters.sortBy,
-                })
-              }
-              className="w-full px-3 py-2 rounded-lg bg-slate-700 border border-slate-600 text-white focus:outline-none focus:border-cyan-400"
-            >
-              {sortOptions.map((option) => (
-                <option key={option.key} value={option.key}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Reset Button */}
-          {isFiltered && (
-            <button
-              onClick={handleReset}
-              className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors text-sm font-semibold text-slate-300"
-              aria-label="Limpar todos os filtros"
-            >
-              <X size={16} aria-hidden="true" />
-              Limpar filtros
-            </button>
-          )}
+          {categoryItems.map((item) => {
+            const active = selectedGenre === item.value;
+            return (
+              <button
+                key={item.value || "all"}
+                type="button"
+                aria-pressed={active}
+                onClick={() => applyCategory(item.value)}
+                className={`group relative h-44 min-w-60 sm:min-w-64 overflow-hidden rounded-2xl border snap-start text-left transition-all ${
+                  active
+                    ? "border-cyan-300 ring-2 ring-cyan-300/50"
+                    : "border-white/10 hover:border-cyan-300/40"
+                }`}
+              >
+                <Image
+                  src={item.image}
+                  alt={`Categoria ${item.label}`}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="(max-width: 640px) 85vw, 260px"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent" />
+                <div className="absolute inset-0 flex items-end justify-start p-4">
+                  <span className="text-3xl sm:text-4xl font-extrabold tracking-wide uppercase text-white drop-shadow-lg">
+                    {item.label}
+                  </span>
+                </div>
+              </button>
+            );
+          })}
         </div>
-      )}
-    </div>
+
+        {canScroll && (
+          <>
+            <button
+              type="button"
+              onClick={() => scrollTrack("left")}
+              className="absolute left-0 top-1/2 z-20 -translate-y-1/2 h-16 w-12 sm:h-20 sm:w-14 bg-slate-950/75 border border-white/10 rounded-r-xl text-white hover:bg-slate-900 transition-colors flex items-center justify-center"
+              aria-label="Categorias anteriores"
+            >
+              <ChevronLeft size={26} />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => scrollTrack("right")}
+              className="absolute right-0 top-1/2 z-20 -translate-y-1/2 h-16 w-12 sm:h-20 sm:w-14 bg-slate-950/75 border border-white/10 rounded-l-xl text-white hover:bg-slate-900 transition-colors flex items-center justify-center"
+              aria-label="Pr\u00f3ximas categorias"
+            >
+              <ChevronRight size={26} />
+            </button>
+
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-linear-to-r from-slate-950/70 to-transparent" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-linear-to-l from-slate-950/70 to-transparent" />
+          </>
+        )}
+      </div>
+    </section>
   );
 }
