@@ -9,7 +9,7 @@
     "prebuild": "rimraf dist",
     "postinstall": "prisma generate --schema src/prisma/schema.prisma",
     "build": "nest build",
-    "start": "npx prisma migrate deploy --schema src/prisma/schema.prisma && node dist/main.js",
+    "start": "node dist/main.js",
     "dev": "nest start --watch",
     "start:dev": "nest start --watch",
     "start:admin": "node dist/admin-main",
@@ -80,4 +80,5 @@
     "seed": "ts-node src/prisma/seed.ts"
   }
 }
+
 
