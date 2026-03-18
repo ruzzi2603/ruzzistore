@@ -27,6 +27,7 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
   const [avatarUploading, setAvatarUploading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const isBusy = loading || avatarUploading;
 
   useEffect(() => {
     setMounted(true);
@@ -138,8 +139,19 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
 
   const modal = (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="fixed inset-0 bg-black/70" onClick={onClose}></div>
+      <div
+        className="fixed inset-0 bg-black/70"
+        onClick={() => {
+          if (!isBusy) onClose();
+        }}
+      ></div>
       <div className="relative bg-(--surface) max-w-md w-full rounded-xl shadow-lg flex flex-col max-h-[90vh]">
+        {isBusy && (
+          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-3 rounded-xl bg-slate-950/80 backdrop-blur-sm">
+            <Loader />
+            <p className="text-sm font-semibold text-white">Carregando...</p>
+          </div>
+        )}
         {/* Header */}
         <div className="px-6 py-4 border-b border-slate-700 flex items-center justify-between">
           <div>
@@ -148,7 +160,13 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
               {tab === 'login' ? 'Entrar na conta' : 'Criar conta'}
             </h2>
           </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-200 text-2xl leading-none">
+          <button
+            onClick={() => {
+              if (!isBusy) onClose();
+            }}
+            disabled={isBusy}
+            className="text-slate-400 hover:text-slate-200 text-2xl leading-none disabled:opacity-40 disabled:cursor-not-allowed"
+          >
             &times;
           </button>
         </div>
@@ -157,13 +175,19 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
         <div className="flex border-b border-slate-700 bg-slate-800/50">
           <button 
             className={`flex-1 py-3 px-4 text-sm font-semibold transition-colors ${tab === 'login' ? 'text-cyan-300 border-b-2 border-cyan-300' : 'text-slate-400 hover:text-slate-300'}`}
-            onClick={() => setTab('login')}
+            onClick={() => {
+              if (!isBusy) setTab('login');
+            }}
+            disabled={isBusy}
           >
             Entrar
           </button>
           <button 
             className={`flex-1 py-3 px-4 text-sm font-semibold transition-colors ${tab === 'register' ? 'text-cyan-300 border-b-2 border-cyan-300' : 'text-slate-400 hover:text-slate-300'}`}
-            onClick={() => setTab('register')}
+            onClick={() => {
+              if (!isBusy) setTab('register');
+            }}
+            disabled={isBusy}
           >
             Criar conta
           </button>
@@ -188,6 +212,8 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
                   className="auth-modal-input"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  disabled={isBusy}
+                  disabled={isBusy}
                 />
               </div>
 
@@ -205,12 +231,15 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
                     className="auth-modal-input"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    disabled={isBusy}
+                    disabled={isBusy}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 text-slate-400 hover:text-slate-200"
+                    className="absolute right-3 text-slate-400 hover:text-slate-200 disabled:opacity-40 disabled:cursor-not-allowed"
                     title={showPassword ? 'Esconder senha' : 'Mostrar senha'}
+                    disabled={isBusy}
                   >
                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
@@ -218,7 +247,7 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
               </div>
 
               <div className="flex justify-end">
-                <button type="submit" disabled={loading} className="auth-modal-submit px-6 py-2" id='btnCR'>
+                <button type="submit" disabled={isBusy} className="auth-modal-submit px-6 py-2" id='btnCR'>
                   {loading ? <Loader /> : 'Entrar'}
                 </button>
               </div>
@@ -241,6 +270,7 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
                   className="auth-modal-input"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                  disabled={isBusy}
                 />
               </div>
 
@@ -251,6 +281,7 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
                   aria-label="Enviar foto de perfil"
                   className="auth-modal-file"
                   onChange={(e) => handleAvatarFile(e.target.files?.[0])}
+                  disabled={isBusy}
                 />
                 {avatar && (
                   <img src={avatar} alt="Preview" className="auth-modal-preview" />
@@ -273,6 +304,8 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
                   className="auth-modal-input"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  disabled={isBusy}
+                  disabled={isBusy}
                 />
               </div>
 
@@ -290,12 +323,15 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
                     className="auth-modal-input"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    disabled={isBusy}
+                    disabled={isBusy}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 text-slate-400 hover:text-slate-200"
+                    className="absolute right-3 text-slate-400 hover:text-slate-200 disabled:opacity-40 disabled:cursor-not-allowed"
                     title={showPassword ? 'Esconder senha' : 'Mostrar senha'}
+                    disabled={isBusy}
                   >
                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
@@ -316,12 +352,14 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
                     className="auth-modal-input"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
+                    disabled={isBusy}
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 text-slate-400 hover:text-slate-200"
+                    className="absolute right-3 text-slate-400 hover:text-slate-200 disabled:opacity-40 disabled:cursor-not-allowed"
                     title={showConfirmPassword ? 'Esconder senha' : 'Mostrar senha'}
+                    disabled={isBusy}
                   >
                     {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
@@ -329,7 +367,7 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
               </div>
 
               <div className="flex justify-end">
-                <button type="submit" disabled={loading} className="auth-modal-submit px-6 py-2" id='btnCR'>
+                <button type="submit" disabled={isBusy} className="auth-modal-submit px-6 py-2" id='btnCR'>
                   {loading ? <Loader /> : 'Criar conta'}
                 </button>
               </div>

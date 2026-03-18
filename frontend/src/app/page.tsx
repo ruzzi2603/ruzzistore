@@ -212,8 +212,8 @@ export default function Home() {
             </h1>
 
             <p className="text-slate-400 mt-4 max-w-2xl">
-              Explore tÃ­tulos famosos e muitos outros, adicicione favoritos e
-              descubra novos jogos! Sua distribuidora de games. Tudo em um sÃ³ lugar.
+              Explore títulos famosos e muitos outros, adicicione favoritos e
+              descubra novos jogos! Sua distribuidora de games. Tudo em um só lugar.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-3">
@@ -227,7 +227,7 @@ export default function Home() {
             </div>
 
             <p className="text-slate-400 mt-4 max-w-2xl">
-              Mais de 1000+ jogos disponÃ­Â­veis
+              Mais de 1000+ jogos disponí­veis
             </p>
 
             {/* eslint-disable-next-line */}
