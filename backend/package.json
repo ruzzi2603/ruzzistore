@@ -1,7 +1,7 @@
-{
-  "name": "ruzzistore-backend",
+﻿{
+  "name": "arenagames-backend",
   "version": "1.0.0",
-  "description": "NestJS API for RuzziStore",
+  "description": "NestJS API for ArenaGames",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
@@ -31,6 +31,7 @@
     "@nestjs/passport": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/schedule": "^4.1.2",
+    "@nestjs/swagger": "^7.3.1",
     "@nestjs/typeorm": "^11.0.0",
     "@prisma/client": "^5.22.0",
     "axios": "^1.13.4",
@@ -48,6 +49,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^5.0.1",
     "rxjs": "^7.8.1",
+    "swagger-ui-express": "^5.0.0",
     "typeorm": "^0.3.28"
   },
   "devDependencies": {
@@ -78,3 +80,4 @@
     "seed": "ts-node src/prisma/seed.ts"
   }
 }
+

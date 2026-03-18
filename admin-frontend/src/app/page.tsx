@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 
@@ -89,7 +89,7 @@ export default function Home() {
         <header className="mb-8 flex items-center justify-between">
           <div>
             <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Admin</p>
-            <h1 className="text-3xl font-semibold">RuzziStore Admin</h1>
+            <h1 className="text-3xl font-semibold">ArenaGames Admin</h1>
           </div>
           {token && (
             <button
@@ -183,3 +183,4 @@ export default function Home() {
     </div>
   );
 }
+

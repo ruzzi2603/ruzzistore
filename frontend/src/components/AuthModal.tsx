@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
@@ -60,18 +60,18 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
   };
 
   const passwordValid = (pwd: string) => {
-    // mínimo 8 caracteres, uma maiúscula e um número
+    // mÃ­nimo 8 caracteres, uma maiÃºscula e um nÃºmero
     return /^(?=.*[A-Z])(?=.*\d).{8,}$/.test(pwd);
   };
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      toast.error('As senhas não coincidem');
+      toast.error('As senhas nÃ£o coincidem');
       return;
     }
     if (!passwordValid(password)) {
-      toast.error('Senha deve ter ≥8 caracteres, uma maiúscula e um número');
+      toast.error('Senha deve ter â‰¥8 caracteres, uma maiÃºscula e um nÃºmero');
       return;
     }
     setLoading(true);
@@ -116,7 +116,7 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
       const form = new FormData();
       form.append('file', file);
       form.append('upload_preset', uploadPreset);
-      form.append('folder', 'ruzzistore/avatars');
+      form.append('folder', 'arenagames/avatars');
 
       const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
         method: 'POST',
@@ -143,7 +143,7 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
         {/* Header */}
         <div className="px-6 py-4 border-b border-slate-700 flex items-center justify-between">
           <div>
-            <p className="text-sm font-semibold text-cyan-300 uppercase tracking-wider">RuzziStore</p>
+            <p className="text-sm font-semibold text-cyan-300 uppercase tracking-wider">ArenaGames</p>
             <h2 className="text-lg font-bold text-white mt-1">
               {tab === 'login' ? 'Entrar na conta' : 'Criar conta'}
             </h2>
@@ -284,7 +284,7 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
                   <input
                     id="password-register"
                     type={showPassword ? 'text' : 'password'}
-                    placeholder="Senha (≥8 caract., 1 maiúsc., 1 número)"
+                    placeholder="Senha (â‰¥8 caract., 1 maiÃºsc., 1 nÃºmero)"
                     aria-label="Senha"
                     required
                     className="auth-modal-input"
@@ -348,3 +348,4 @@ if (!portalTarget) return null;
 return createPortal(modal, portalTarget);
 
 }
+

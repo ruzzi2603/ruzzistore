@@ -3,21 +3,20 @@ generator client {
 }
 
 datasource db {
-  provider          = "mysql"
-  url               = env("DATABASE_URL")
-  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  name      String   @default("")
-  password  String
-  avatar    String?  @db.LongText
+  id          Int       @id @default(autoincrement())
+  email       String    @unique
+  name        String    @default("")
+  password    String
+  avatar      String?
   lastLoginAt DateTime?
-  createdAt DateTime @default(now())
+  createdAt   DateTime  @default(now())
 
-  favorites Favorite[]
+  favorites   Favorite[]
 
   @@map("user")
 }
@@ -56,7 +55,7 @@ model GameCategory {
   category Category @relation(fields: [categoryId], references: [id], map: "GameCategory_categoryId_fkey")
 
   @@id([gameId, categoryId])
-  @@index([categoryId], map: "GameCategory_categoryId_fkey")
+  @@index([categoryId])
   @@map("gamecategory")
 }
 

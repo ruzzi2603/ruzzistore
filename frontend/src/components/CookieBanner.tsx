@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -25,7 +25,7 @@ export default function CookieBanner() {
           className="cookie-banner"
         >
           <p className="cookie-banner-text">
-            Usamos cookies para melhorar sua experiencia na RuzziStore. Ao continuar, voce concorda com nossa politica.
+            Usamos cookies para melhorar sua experiencia na ArenaGames. Ao continuar, voce concorda com nossa politica.
           </p>
           <button onClick={accept} className="cookie-banner-btn">
             Aceitar e fechar
@@ -35,3 +35,4 @@ export default function CookieBanner() {
     </AnimatePresence>
   );
 }
+

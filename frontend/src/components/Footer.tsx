@@ -1,9 +1,9 @@
-export default function Footer() {
+﻿export default function Footer() {
   return (
     <footer className="footer" >
       <div className="footer-inner" id="footer">
         <p className="footer-text">
-          &copy; {new Date().getFullYear()} RuzziStore. Todos os direitos reservados.
+          &copy; {new Date().getFullYear()} ArenaGames. Todos os direitos reservados.
         </p>
         <div className="footer-links">
           <a href="#" className="footer-link">Termos</a>
@@ -13,3 +13,4 @@ export default function Footer() {
     </footer>
   );
 }
+

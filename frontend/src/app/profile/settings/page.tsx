@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/components/context/AuthContext';
@@ -48,7 +48,7 @@ export default function SettingsPage() {
       const form = new FormData();
       form.append('file', file);
       form.append('upload_preset', uploadPreset);
-      form.append('folder', 'ruzzistore/avatars');
+      form.append('folder', 'arenagames/avatars');
 
       const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
         method: 'POST',
@@ -178,3 +178,4 @@ export default function SettingsPage() {
     </div>
   );
 }
+

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState, type CSSProperties } from 'react';
 import GamesGrid from '@/components/Game/GamesGrid';
@@ -208,12 +208,12 @@ export default function Home() {
             </p>
 
             <h1 className="text-4xl md:text-5xl font-semibold mt-3 text-white inline-flex items-center gap-3">
-              <span>Plataforma de Jogos Digitais - RUZZISTORE</span>
+              <span>Plataforma de Jogos Digitais - ARENAGAMES</span>
             </h1>
 
             <p className="text-slate-400 mt-4 max-w-2xl">
-              Explore títulos famosos e muitos outros, adicicione favoritos e
-              descubra novos jogos! Sua distribuidora de games. Tudo em um só lugar.
+              Explore tÃ­tulos famosos e muitos outros, adicicione favoritos e
+              descubra novos jogos! Sua distribuidora de games. Tudo em um sÃ³ lugar.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-3">
@@ -222,12 +222,12 @@ export default function Home() {
                 className="bg-cyan-300 text-slate-900 px-5 py-2.5 rounded-lg font-semibold hover:bg-cyan-200 transition-colors"
              id="bnt"
              >
-                Começar
+                ComeÃ§ar
               </button>
             </div>
 
             <p className="text-slate-400 mt-4 max-w-2xl">
-              Mais de 1000+ jogos disponí­veis
+              Mais de 1000+ jogos disponÃ­Â­veis
             </p>
 
             {/* eslint-disable-next-line */}
@@ -240,7 +240,7 @@ export default function Home() {
                   className="item item-pos-1"
                 >
                   <div className="carde">
-                    <img src="/img/img.webp" alt="Capa de jogo destacada 1 - RuzziStore" className="w-full h-full object-cover" />
+                    <img src="/img/img.webp" alt="Capa de jogo destacada 1 - ArenaGames" className="w-full h-full object-cover" />
                   </div>
                 </div>
                 {/* eslint-disable-next-line */}
@@ -248,7 +248,7 @@ export default function Home() {
                   className="item item-pos-2"
                 >
                   <div className="carde">
-                    <img src="/img/img2.webp" alt="Capa de jogo destacada 2 - RuzziStore" className="w-full h-full object-cover" />
+                    <img src="/img/img2.webp" alt="Capa de jogo destacada 2 - ArenaGames" className="w-full h-full object-cover" />
                   </div>
                 </div>
                 {/* eslint-disable-next-line */}
@@ -256,7 +256,7 @@ export default function Home() {
                   className="item item-pos-3"
                 >
                   <div className="carde">
-                    <img src="/img/img3.webp" alt="Capa de jogo destacada 3 - RuzziStore" className="w-full h-full object-cover" />
+                    <img src="/img/img3.webp" alt="Capa de jogo destacada 3 - ArenaGames" className="w-full h-full object-cover" />
                   </div>
                 </div>
                 {/* eslint-disable-next-line */}
@@ -264,7 +264,7 @@ export default function Home() {
                   className="item item-pos-4"
                 >
                   <div className="carde">
-                    <img src="/img/img4.webp" alt="Capa de jogo destacada 4 - RuzziStore" className="w-full h-full object-cover" />
+                    <img src="/img/img4.webp" alt="Capa de jogo destacada 4 - ArenaGames" className="w-full h-full object-cover" />
                   </div>
                 </div>
                 {/* eslint-disable-next-line */}
@@ -272,7 +272,7 @@ export default function Home() {
                   className="item item-pos-5"
                 >
                   <div className="carde">
-                    <img src="/img/img5.webp" alt="Capa de jogo destacada 5 - RuzziStore" className="w-full h-full object-cover" />
+                    <img src="/img/img5.webp" alt="Capa de jogo destacada 5 - ArenaGames" className="w-full h-full object-cover" />
                   </div>
                 </div>
                 {/* eslint-disable-next-line */}
@@ -280,7 +280,7 @@ export default function Home() {
                   className="item item-pos-6"
                 >
                   <div className="carde">
-                    <img src="/img/img6.webp" alt="Capa de jogo destacada 6 - RuzziStore" className="w-full h-full object-cover" />
+                    <img src="/img/img6.webp" alt="Capa de jogo destacada 6 - ArenaGames" className="w-full h-full object-cover" />
                   </div>
                 </div>
                 {/* eslint-disable-next-line */}
@@ -288,7 +288,7 @@ export default function Home() {
                   className="item item-pos-7"
                 >
                   <div className="carde">
-                    <img src="/img/img7.avif" alt="Capa de jogo destacada 7 - RuzziStore" className="w-full h-full object-cover" />
+                    <img src="/img/img7.avif" alt="Capa de jogo destacada 7 - ArenaGames" className="w-full h-full object-cover" />
                   </div>
                 </div>
                 {/* eslint-disable-next-line */}
@@ -296,7 +296,7 @@ export default function Home() {
                   className="item item-pos-8"
                 >
                   <div className="carde">
-                    <img src="/img/img8.webp" alt="Capa de jogo destacada 8 - RuzziStore" className="w-full h-full object-cover" />
+                    <img src="/img/img8.webp" alt="Capa de jogo destacada 8 - ArenaGames" className="w-full h-full object-cover" />
                   </div>
                 </div>
                 {/* eslint-disable-next-line */}
@@ -304,7 +304,7 @@ export default function Home() {
                   className="item item-pos-9"
                 >
                   <div className="carde">
-                    <img src="/img/img9.webp" alt="Capa de jogo destacada 9 - RuzziStore" className="w-full h-full object-cover" />
+                    <img src="/img/img9.webp" alt="Capa de jogo destacada 9 - ArenaGames" className="w-full h-full object-cover" />
                   </div>
                 </div>
               </div>
@@ -313,7 +313,7 @@ export default function Home() {
         </section>
        </div>
         {/* Filters Section */}
-        <section id="filters-section" className="mb-12" aria-label="SeÃ§Ã£o de filtros de jogos">
+        <section id="filters-section" className="mb-12" aria-label="SeÃƒÂ§ÃƒÂ£o de filtros de jogos">
           <GameFilters 
             onFiltersChange={setFilters}          />
         </section>
@@ -360,4 +360,5 @@ export default function Home() {
     </div>
   );
 }
+
 

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useAuth } from '@/components/context/AuthContext';
 import AnimatedSection from '@/components/AnimatedSection';
@@ -14,7 +14,7 @@ export default function ProfilePage() {
   if (!user) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh]">
-        <p className="text-zinc-500 mb-4">Você precisa estar logado para ver esta página.</p>
+        <p className="text-zinc-500 mb-4">VocÃª precisa estar logado para ver esta pÃ¡gina.</p>
         <Link href="/login" className="bg-green-600 px-6 py-2 rounded-lg font-bold">Ir para Login</Link>
       </div>
     );
@@ -66,7 +66,7 @@ export default function ProfilePage() {
                   <Shield size={20} className="text-green-500" />
                   <div>
                     <p className="text-xs uppercase font-bold tracking-widest text-zinc-600">Status da Conta</p>
-                    <p className="text-white font-medium">Membro RuzziStore</p>
+                    <p className="text-white font-medium">Membro ArenaGames</p>
                   </div>
                 </div>
               </div>

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -34,11 +34,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     async function loadStorageData() {
-      const token = localStorage.getItem('@RuzziStore:token');
-      const storagedUser = localStorage.getItem('@RuzziStore:user');
+      const token = localStorage.getItem('@ArenaGames:token');
+      const storagedUser = localStorage.getItem('@ArenaGames:user');
 
       if (token && storagedUser) {
-        setCookie(undefined, 'ruzzistore.token', token, {
+        setCookie(undefined, 'arenagames.token', token, {
           maxAge: 60 * 60 * 24 * 7,
           path: '/',
           sameSite: 'lax',
@@ -63,9 +63,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         throw new Error('Falha na autenticacao');
       }
 
-      localStorage.setItem('@RuzziStore:token', accessToken);
-      localStorage.setItem('@RuzziStore:user', JSON.stringify(userData));
-      setCookie(undefined, 'ruzzistore.token', accessToken, {
+      localStorage.setItem('@ArenaGames:token', accessToken);
+      localStorage.setItem('@ArenaGames:user', JSON.stringify(userData));
+      setCookie(undefined, 'arenagames.token', accessToken, {
         maxAge: 60 * 60 * 24 * 7,
         path: '/',
         sameSite: 'lax',
@@ -84,9 +84,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signOut = () => {
-    localStorage.removeItem('@RuzziStore:token');
-    localStorage.removeItem('@RuzziStore:user');
-    destroyCookie(undefined, 'ruzzistore.token');
+    localStorage.removeItem('@ArenaGames:token');
+    localStorage.removeItem('@ArenaGames:user');
+    destroyCookie(undefined, 'arenagames.token');
     setUser(null);
 
     clearFavorites();
@@ -97,7 +97,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const updateUser = (updated: User) => {
     setUser(updated);
-    localStorage.setItem('@RuzziStore:user', JSON.stringify(updated));
+    localStorage.setItem('@ArenaGames:user', JSON.stringify(updated));
   };
 
   return (
@@ -108,4 +108,5 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 }
 
 export const useAuth = () => useContext(AuthContext);
+
 

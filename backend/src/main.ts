@@ -1,10 +1,11 @@
-import { ValidationPipe } from '@nestjs/common';
+﻿import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as cookieParser from 'cookie-parser';
 import * as express from 'express';
 import { applyHelmet } from './security/helmet';
 import { applyRateLimit } from './security/rate-limit';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -48,7 +49,18 @@ async function bootstrap() {
     credentials: true,
   });
 
+  const swaggerConfig = new DocumentBuilder()
+    .setTitle('ArenaGames API')
+    .setDescription('Documentacao da API do backend da ArenaGames')
+    .setVersion('1.0.0')
+    .addBearerAuth()
+    .build();
+
+  const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig);
+  SwaggerModule.setup('api-docs', app, swaggerDocument);
+
   const port = Number(process.env.PORT) || 3001;
   await app.listen(port);
 }
 bootstrap();
+

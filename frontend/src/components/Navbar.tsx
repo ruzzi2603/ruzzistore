@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -53,17 +53,17 @@ export default function Navbar() {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <nav className={`navbar ${isVisible ? 'translate-y-0' : '-translate-y-full'}`} aria-label="Navega��o principal">
+    <nav className={`navbar ${isVisible ? 'translate-y-0' : '-translate-y-full'}`} aria-label="Navegaï¿½ï¿½o principal">
       <div className="navbar-inner">
         <div id="title">
-          <Link href="/" className="navbar-brand" aria-label="RuzziStore - Home">
+          <Link href="/" className="navbar-brand" aria-label="ArenaGames - Home">
             <span className="navbar-brand-text">
               RUZZI<span className="navbar-brand-accent">STORE</span>
             </span>
           </Link>
         </div>
 
-        <div className="navbar-links" role="navigation" aria-label="Menu de navega��o">
+        <div className="navbar-links" role="navigation" aria-label="Menu de navegaï¿½ï¿½o">
           <Link
             href="/dashboard"
             className={`navbar-link ${isActive('/dashboard') ? 'navbar-link-active' : 'navbar-link-inactive'}`}
@@ -96,3 +96,4 @@ export default function Navbar() {
     </nav>
   );
 }
+

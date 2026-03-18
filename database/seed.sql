@@ -1,2 +1,2 @@
--- Database seed script
-USE ruzzistore;
+﻿-- Database seed script
+USE arenagames;

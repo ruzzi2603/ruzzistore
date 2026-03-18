@@ -1,4 +1,4 @@
-const BASE_URL =
+﻿const BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
@@ -11,7 +11,7 @@ async function request<T>(
 ): Promise<T> {
   const token =
     typeof window !== 'undefined'
-      ? localStorage.getItem('@RuzziStore:token')
+      ? localStorage.getItem('@ArenaGames:token')
       : null;
 
   const headers: HeadersInit = {
@@ -40,7 +40,7 @@ async function request<T>(
   }
 
   if (!response.ok) {
-    throw new Error(data?.message || 'Erro na requisição');
+    throw new Error(data?.message || 'Erro na requisiÃ§Ã£o');
   }
 
   return data as T;
@@ -65,3 +65,4 @@ const api = {
 };
 
 export default api;
+

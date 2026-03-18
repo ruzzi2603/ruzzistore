@@ -1,0 +1,276 @@
+﻿{
+  "info": {
+    "name": "ArenaGames API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3001" },
+    { "key": "token", "value": "" },
+    { "key": "gameId", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@exemplo.com\",\n  \"password\": \"Senha123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Nome\",\n  \"email\": \"user@exemplo.com\",\n  \"password\": \"Senha123\",\n  \"avatar\": \"https://...\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "register"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Me",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "me"]
+            }
+          }
+        },
+        {
+          "name": "Update Name",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Novo Nome\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/update",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "update"]
+            }
+          }
+        },
+        {
+          "name": "Update Avatar",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"avatar\": \"https://...\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/avatar",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "avatar"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Favorites",
+      "item": [
+        {
+          "name": "List IDs",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/favorites/ids",
+              "host": ["{{baseUrl}}"],
+              "path": ["favorites", "ids"]
+            }
+          }
+        },
+        {
+          "name": "List Favorites",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/favorites",
+              "host": ["{{baseUrl}}"],
+              "path": ["favorites"]
+            }
+          }
+        },
+        {
+          "name": "Toggle Favorite",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"game\": {\n    \"title\": \"Titulo\",\n    \"description\": \"...\",\n    \"imageUrl\": \"https://...\",\n    \"platform\": \"rawg\",\n    \"url\": \"https://...\",\n    \"isFree\": false\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/favorites/{{gameId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["favorites", "{{gameId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Games",
+      "item": [
+        {
+          "name": "List Games",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/games?search=&category=&platform=&free=&source=&page=1",
+              "host": ["{{baseUrl}}"],
+              "path": ["games"],
+              "query": [
+                { "key": "search", "value": "" },
+                { "key": "category", "value": "" },
+                { "key": "platform", "value": "" },
+                { "key": "free", "value": "" },
+                { "key": "source", "value": "" },
+                { "key": "page", "value": "1" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Rawg Latest",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/games/rawg-latest?count=40",
+              "host": ["{{baseUrl}}"],
+              "path": ["games", "rawg-latest"],
+              "query": [
+                { "key": "count", "value": "40" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Game Details",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/games/{{gameId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["games", "{{gameId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "RAWG (proxy)",
+      "item": [
+        {
+          "name": "RAWG Games",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/rawg/games?page=1",
+              "host": ["{{baseUrl}}"],
+              "path": ["rawg", "games"],
+              "query": [
+                { "key": "page", "value": "1" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "RAWG Details",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/rawg/games/{{gameId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["rawg", "games", "{{gameId}}"]
+            }
+          }
+        },
+        {
+          "name": "RAWG Movies",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/rawg/games/{{gameId}}/movies",
+              "host": ["{{baseUrl}}"],
+              "path": ["rawg", "games", "{{gameId}}", "movies"]
+            }
+          }
+        },
+        {
+          "name": "RAWG Twitch",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/rawg/games/{{gameId}}/twitch",
+              "host": ["{{baseUrl}}"],
+              "path": ["rawg", "games", "{{gameId}}", "twitch"]
+            }
+          }
+        },
+        {
+          "name": "RAWG YouTube",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/rawg/games/{{gameId}}/youtube",
+              "host": ["{{baseUrl}}"],
+              "path": ["rawg", "games", "{{gameId}}", "youtube"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+
