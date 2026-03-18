@@ -12,7 +12,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(true);
   const lastScrollYRef = useRef(0);
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
 
   useEffect(() => {
     let ticking = false;
@@ -58,7 +58,7 @@ export default function Navbar() {
         <div id="title">
           <Link href="/" className="navbar-brand" aria-label="ArenaGames - Home">
             <span className="navbar-brand-text">
-              RUZZI<span className="navbar-brand-accent">STORE</span>
+              ARENA<span className="navbar-brand-accent">GAMES</span>
             </span>
           </Link>
         </div>
@@ -78,7 +78,7 @@ export default function Navbar() {
             className={`navbar-link ${pathname.startsWith('/dashboard/library') ? 'navbar-link-active' : 'navbar-link-inactive'}`}
             aria-current={pathname.startsWith('/dashboard/library') ? 'page' : undefined}
             onClick={(e) => {
-              if (!user) {
+              if (!loading && !user) {
                 e.preventDefault();
                 toast.error('Voce precisa logar para acessar a biblioteca.');
               }
@@ -96,4 +96,5 @@ export default function Navbar() {
     </nav>
   );
 }
+
 
