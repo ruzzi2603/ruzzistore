@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+﻿import { create } from 'zustand';
 import api from '@/lib/api';
 import { toast } from 'react-hot-toast';
 
@@ -29,7 +29,7 @@ export const useFavoritesStore = create<FavoritesState>((set, get) => ({
       const data = await api.get<Game[]>('/favorites');
       set({ favorites: data });
     } catch (error) {
-      console.error("Erro ao sincronizar favoritos");
+      console.error("Erro ao sincronizar favoritos", error);
     }
   },
 
@@ -46,12 +46,13 @@ export const useFavoritesStore = create<FavoritesState>((set, get) => ({
     try {
       await api.post(`/favorites/${game.id}`, { game });
     } catch (error) {
+      console.error("Erro ao sincronizar favoritos", error);
       set({ favorites: previousFavorites });
       const message = error instanceof Error ? error.message : 'Erro ao salvar favorito';
       if (message.toLowerCase().includes('unauthorized') || message.includes('401')) {
-        toast.error('Sessao expirada. Faça login novamente.');
+        toast.error('Sessão expirada. Faça login novamente.');
       } else {
-        toast.error('Nao foi possivel salvar o favorito.');
+        toast.error('Não foi possível salvar o favorito.');
       }
       console.error('Erro ao salvar favorito no servidor', error);
     }
@@ -69,3 +70,10 @@ export const useFavoritesStore = create<FavoritesState>((set, get) => ({
     set({ favorites: [] });
   },
 }));
+
+
+
+
+
+
+

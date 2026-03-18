@@ -1,7 +1,6 @@
-'use client';
+﻿'use client';
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { useState } from 'react';
-import { X, Play } from 'lucide-react';
 
 
 
@@ -20,7 +19,6 @@ export function GameDescription({
   releases,
   rating,
 }: GameDescriptionProps) {
- ;
 
 
 
@@ -33,7 +31,7 @@ export function GameDescription({
       >
         {/* Description Section */}
         <article className="rounded-2xl border border-white/10 bg-(--surface)/80 p-6">
-          <h2 className="text-2xl font-semibold mb-4 text-white">Sobre o Jogo</h2>
+          <h2 className="text-2xl font-semibold mb-4 text-white">Sobre {title}</h2>
           <div className="space-y-4">
             {description && (
               <p className="text-slate-300 leading-relaxed whitespace-pre-line text-justify">
@@ -82,3 +80,6 @@ export function GameDescription({
     </>
   );
 }
+
+
+

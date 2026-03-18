@@ -160,7 +160,7 @@ export default function Home() {
                 className="bg-cyan-300 text-slate-900 px-5 py-2.5 rounded-lg font-semibold hover:bg-cyan-200 transition-colors"
              id="bnt"
              >
-                ComeÃ§ar
+                Começar
               </button>
             </div>
 
