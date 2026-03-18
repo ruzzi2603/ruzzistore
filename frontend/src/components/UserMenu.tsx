@@ -1,4 +1,4 @@
-ï»¿'use client';
+'use client';
 /* eslint-disable @next/next/no-img-element */
 
 import { useState, useRef, useEffect } from 'react';
@@ -34,9 +34,9 @@ export default function UserMenu() {
 
   if (!user) {
     return (
-      <div className= user-menu-auth>
-        <button onClick={() => openAuth('login')} className=user-menu-login>
-          <Image src={logarImg} id=ImgLgFr alt=Logar width={36} height={32} priority />
+      <div className="user-menu-auth">
+        <button onClick={() => openAuth('login')} className="user-menu-login">
+          <Image src={logarImg} id="ImgLgFr" alt="Logar" width={36} height={32} priority />
         </button>
         <AuthModal open={authOpen} initialTab={authTab} onClose={() => setAuthOpen(false)} />
       </div>
@@ -44,18 +44,18 @@ export default function UserMenu() {
   }
 
   return (
-    <div className=user-menu ref={menuRef}>
-      <button onClick={() => setIsOpen(!isOpen)} className=user-menu-button>
+    <div className="user-menu" ref={menuRef}>
+      <button onClick={() => setIsOpen(!isOpen)} className="user-menu-button">
         <img
           src={
             user.avatar ||
-            https://ui-avatars.com/api/?name=&background=0f1720&color=22d3ee
+            `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=0f1720&color=22d3ee`
           }
           alt={user.name}
-          className=user-menu-avatar
+          className="user-menu-avatar"
         />
-        <span className=user-menu-name>{user.name.split(' ')[0]}</span>
-        <ChevronDown size={14} className={user-menu-chevron } />
+        <span className="user-menu-name">{user.name.split(' ')[0]}</span>
+        <ChevronDown size={14} className={`user-menu-chevron ${isOpen ? 'open' : ''}`} />
       </button>
 
       <AnimatePresence>
@@ -64,48 +64,52 @@ export default function UserMenu() {
             initial={{ opacity: 0, y: 10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            className=user-menu-dropdown
+            className="user-menu-dropdown"
           >
-            <div id=menu>
-              <div className=user-menu-header>
-                <p className=user-menu-header-label>Conta</p>
-                <p className=user-menu-header-email>{user.email}</p>
+            <div id="menu">
+              <div className="user-menu-header">
+                <p className="user-menu-header-label">Conta</p>
+                <p className="user-menu-header-email">{user.email}</p>
                 {user.createdAt && (
-                  <p className=user-menu-header-date>
+                  <p className="user-menu-header-date">
                     Entrou em {new Date(user.createdAt).toLocaleDateString()}
                   </p>
                 )}
               </div>
 
-              <Link href=/profile onClick={() => setIsOpen(false)} className=user-menu-link>
+              <Link href="/profile" onClick={() => setIsOpen(false)} className="user-menu-link">
                 <User size={18} />
                 <span>Meu Perfil</span>
               </Link>
 
               <Link
-                href=/dashboard/library
+                href="/dashboard/library"
                 onClick={() => setIsOpen(false)}
-                className=user-menu-link
+                className="user-menu-link"
               >
                 <Library size={18} />
                 <span>Minha Biblioteca</span>
               </Link>
 
-              <Link href=/profile/settings onClick={() => setIsOpen(false)} className=user-menu-link>
+              <Link
+                href="/profile/settings"
+                onClick={() => setIsOpen(false)}
+                className="user-menu-link"
+              >
                 <Settings size={18} />
-                <span>ConfiguraÃ§Ãµes</span>
+                <span>Configurações</span>
               </Link>
 
-              <div className=user-menu-logout-wrap>
+              <div className="user-menu-logout-wrap">
                 <button
                   onClick={() => {
                     setIsOpen(false);
                     logout();
                   }}
-                  className=user-menu-logout
+                  className="user-menu-logout"
                 >
                   <LogOut size={18} />
-                  <span className=user-menu-logout-text>Sair da conta</span>
+                  <span className="user-menu-logout-text">Sair da conta</span>
                 </button>
               </div>
             </div>
