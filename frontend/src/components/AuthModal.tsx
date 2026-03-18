@@ -61,18 +61,18 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
   };
 
   const passwordValid = (pwd: string) => {
-    // mÃ­nimo 8 caracteres, uma maiÃºscula e um nÃºmero
+    // mínimo 8 caracteres, uma maiúscula e um número
     return /^(?=.*[A-Z])(?=.*\d).{8,}$/.test(pwd);
   };
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      toast.error('As senhas nÃ£o coincidem');
+      toast.error('As senhas não coincidem');
       return;
     }
     if (!passwordValid(password)) {
-      toast.error('Senha deve ter â‰¥8 caracteres, uma maiÃºscula e um nÃºmero');
+      toast.error('Senha deve ter ≥8 caracteres, uma maiúscula e um número');
       return;
     }
     setLoading(true);
@@ -213,7 +213,6 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={isBusy}
-                  disabled={isBusy}
                 />
               </div>
 
@@ -231,7 +230,6 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
                     className="auth-modal-input"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    disabled={isBusy}
                     disabled={isBusy}
                   />
                   <button
@@ -305,7 +303,6 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={isBusy}
-                  disabled={isBusy}
                 />
               </div>
 
@@ -317,13 +314,12 @@ export default function AuthModal({ open, initialTab = 'login', onClose }: AuthM
                   <input
                     id="password-register"
                     type={showPassword ? 'text' : 'password'}
-                    placeholder="Senha (â‰¥8 caract., 1 maiÃºsc., 1 nÃºmero)"
+                    placeholder="Senha (≥8 caract., 1 maiÃºsc., 1 número)"
                     aria-label="Senha"
                     required
                     className="auth-modal-input"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    disabled={isBusy}
                     disabled={isBusy}
                   />
                   <button

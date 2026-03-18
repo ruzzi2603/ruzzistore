@@ -104,7 +104,7 @@ export default function UserMenu() {
                 className="user-menu-link"
               >
                 <Settings size={18} />
-                <span>Configura��es</span>
+                <span>Configurações</span>
               </Link>
 
               <div className="user-menu-logout-wrap">

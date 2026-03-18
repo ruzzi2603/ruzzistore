@@ -22,7 +22,7 @@ interface GamesGridProps {
 }
 
 export default function GamesGrid({ games, user }: GamesGridProps) {
-  const { favorites, fetchFavorites, toggleFavorite, isFavorite } = useFavoritesStore();
+  const { fetchFavorites, toggleFavorite, isFavorite } = useFavoritesStore();
 
   useEffect(() => {
     if (user) {

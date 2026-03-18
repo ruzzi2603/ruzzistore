@@ -84,7 +84,7 @@ export default function GameFilters({ onFiltersChange }: GameFiltersProps) {
               <button
                 key={item.value || "all"}
                 type="button"
-                aria-pressed={active}
+                aria-pressed={active ? 'true' : 'false'}
                 onClick={() => applyCategory(item.value)}
                 className={`group relative h-44 min-w-60 sm:min-w-64 overflow-hidden rounded-2xl border snap-start text-left transition-all ${
                   active
