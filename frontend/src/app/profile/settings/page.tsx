@@ -1,4 +1,5 @@
 ﻿'use client';
+/* eslint-disable @next/next/no-img-element */
 
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/components/context/AuthContext';
@@ -107,7 +108,7 @@ export default function SettingsPage() {
   return (
     <div className="max-w-2xl mx-auto px-6 py-12">
       <AnimatedSection>
-        <h1 className="text-3xl font-semibold text-white mb-8">Configuracoes</h1>
+        <h1 className="text-3xl font-semibold text-white mb-8">Configura??es</h1>
 
         <form onSubmit={handleUpdate} className="space-y-6 bg-[var(--surface)] p-8 rounded-2xl border border-white/10">
           <div>
@@ -157,7 +158,7 @@ export default function SettingsPage() {
           </div>
 
           <div>
-            <label className="block text-slate-500 text-sm mb-2">E-mail (nao editavel)</label>
+            <label className="block text-slate-500 text-sm mb-2">E-mail (n?o editavel)</label>
             <input
               type="text"
               value={user?.email}
@@ -171,7 +172,7 @@ export default function SettingsPage() {
             disabled={isUpdating}
             className="w-full bg-cyan-300 hover:bg-cyan-200 text-slate-900 font-semibold py-3 rounded-lg transition-all disabled:opacity-50"
           >
-            {isUpdating ? 'Salvando...' : 'Salvar alteracoes'}
+            {isUpdating ? 'Salvando...' : 'Salvar altera??es'}
           </button>
         </form>
       </AnimatedSection>

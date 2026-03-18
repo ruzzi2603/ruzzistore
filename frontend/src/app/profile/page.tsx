@@ -1,4 +1,5 @@
 ﻿'use client';
+/* eslint-disable @next/next/no-img-element */
 
 import { useAuth } from '@/components/context/AuthContext';
 import AnimatedSection from '@/components/AnimatedSection';
@@ -14,7 +15,7 @@ export default function ProfilePage() {
   if (!user) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh]">
-        <p className="text-zinc-500 mb-4">VocÃª precisa estar logado para ver esta pÃ¡gina.</p>
+        <p className="text-zinc-500 mb-4">Você precisa estar logado para ver esta página.</p>
         <Link href="/login" className="bg-green-600 px-6 py-2 rounded-lg font-bold">Ir para Login</Link>
       </div>
     );
@@ -77,3 +78,4 @@ export default function ProfilePage() {
     </div>
   );
 }
+

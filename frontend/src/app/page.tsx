@@ -1,6 +1,7 @@
 ﻿'use client';
+/* eslint-disable @next/next/no-img-element */
 
-import { useEffect, useState, type CSSProperties } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import GamesGrid from '@/components/Game/GamesGrid';
 import CookieBanner from '@/components/CookieBanner';
 import GameFilters from '@/components/GameFilters';
@@ -21,12 +22,9 @@ export default function Home() {
   const { user } = useAuth();
   const [games, setGames] = useState<Game[]>([]);
   const [allGames, setAllGames] = useState<Game[]>([]);
-  const [latestGames, setLatestGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(true);
-  const [loadingLatest, setLoadingLatest] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [page, setPage] = useState(1);
-  const [showLatest, setShowLatest] = useState(false);
   const [filters, setFilters] = useState({
     searchTerm: '',
     genre: '',
@@ -36,7 +34,7 @@ export default function Home() {
   });
   const PAGE_SIZE = 20;
 
-  const fetchGames = async (pageToLoad: number, isInitial = false) => {
+  const fetchGames = useCallback(async (pageToLoad: number, isInitial = false) => {
     if (isInitial) {
       setLoading(true);
     } else {
@@ -44,13 +42,11 @@ export default function Home() {
     }
 
     try {
-      console.log('fetchGames start', { pageToLoad, filters, isInitial });
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/games?source=rawg&page=${pageToLoad}`,
         { cache: "no-store" },
       );
       if (!res.ok) {
-        console.warn('fetchGames: response not ok', res.status);
         if (isInitial) setGames([]);
         return;
       }
@@ -60,26 +56,9 @@ export default function Home() {
         : Array.isArray((data as any)?.results)
         ? (data as any).results
         : [];
-      console.log('fetchGames:', { pageToLoad, received: safeData.length, filters });
       setAllGames(safeData as Game[]);
-      // compute visible games right away in case effect hasn't run yet
-      let initialFiltered: Game[] = safeData as Game[];
-      if (filters.searchTerm) {
-        const term = filters.searchTerm.toLowerCase();
-        initialFiltered = initialFiltered.filter((g) =>
-          g.title.toLowerCase().includes(term)
-        );
-      }
-      if (filters.genre) {
-        const genreVal = filters.genre.toLowerCase();
-        initialFiltered = initialFiltered.filter((g) =>
-          Array.isArray(g.genres) &&
-          g.genres.some((gn) => gn.toLowerCase().includes(genreVal))
-        );
-      }
-      console.log('fetchGames initialFiltered count', initialFiltered.length);
-      const visibleCount = Math.min(initialFiltered.length, pageToLoad * PAGE_SIZE);
-      setGames(initialFiltered.slice(0, visibleCount));
+      const visibleCount = Math.min(safeData.length, pageToLoad * PAGE_SIZE);
+      setGames((safeData as Game[]).slice(0, visibleCount));
       setPage(pageToLoad);
     } catch (err) {
       console.error('fetchGames error', err);
@@ -91,54 +70,13 @@ export default function Home() {
         setLoadingMore(false);
       }
     }
-  };
+  }, [PAGE_SIZE]);
 
-  const fetchLatest = async () => {
-    setShowLatest(true);
-    if (latestGames.length > 0) {
-      document
-        .getElementById("latest-section")
-        ?.scrollIntoView({ behavior: "smooth" });
-      return;
-    }
-
-    setLoadingLatest(true);
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/games/rawg-latest?count=40`,
-        { cache: "no-store" },
-      );
-      if (!res.ok) {
-        setLatestGames([]);
-        return;
-      }
-      const data = await res.json();
-      setLatestGames(data);
-      setTimeout(() => {
-        document
-          .getElementById("latest-section")
-          ?.scrollIntoView({ behavior: "smooth" });
-      }, 50);
-    } catch {
-      setLatestGames([]);
-    } finally {
-      setLoadingLatest(false);
-    }
-  };
-
-  const goToHighlights = () => {
-    setShowLatest(false);
-    setTimeout(() => {
-      document
-        .getElementById("highlights-section")
-        ?.scrollIntoView({ behavior: "smooth" });
-    }, 50);
-  };
 
   // load initial list
   useEffect(() => {
     fetchGames(1, true);
-  }, []);
+  }, [fetchGames]);
 
   const handleLoadMore = () => {
     fetchGames(page + 1);
