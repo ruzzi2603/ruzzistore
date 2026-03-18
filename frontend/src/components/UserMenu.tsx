@@ -34,12 +34,19 @@ export default function UserMenu() {
 
   if (!user) {
     return (
-      <div className="user-menu-auth">
-        <button onClick={() => openAuth('login')} className="user-menu-login">
-          <Image src={logarImg} id="ImgLgFr" alt="Logar" width={36} height={32} priority />
-        </button>
-        <AuthModal open={authOpen} initialTab={authTab} onClose={() => setAuthOpen(false)} />
-      </div>
+     <div className="user-menu-auth">
+<button
+  onClick={() => openAuth('login')}
+  className="user-menu-login"
+  aria-label="Entrar"
+  title="Entrar"
+>
+  <Image src={logarImg} id="ImgLgFr" alt="Logar" width={36} height={32} priority />
+</button>
+
+  <AuthModal open={authOpen} initialTab={authTab} onClose={() => setAuthOpen(false)} />
+</div>
+
     );
   }
 
@@ -97,7 +104,7 @@ export default function UserMenu() {
                 className="user-menu-link"
               >
                 <Settings size={18} />
-                <span>Configurações</span>
+                <span>Configuraï¿½ï¿½es</span>
               </Link>
 
               <div className="user-menu-logout-wrap">
